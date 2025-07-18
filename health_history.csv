@@ -1,0 +1,28 @@
+RecordID,CowID,Breed,Date,Event,Status,Notes,Veterinarian
+1,C001,Holstein,2024-02-25,Routine checkup,Good,All vital signs normal,Dr. Smith
+2,C001,Holstein,2024-02-20,Vaccination,Completed,Annual vaccination administered,Dr. Johnson
+3,C001,Holstein,2024-02-15,Pregnancy check,Confirmed,Pregnancy confirmed at 45 days,Dr. Williams
+4,C023,Jersey,2024-02-28,Routine checkup,Good,Minor temperature elevation noted,Dr. Brown
+5,C023,Jersey,2024-02-22,Hoof trimming,Completed,Regular hoof maintenance,Dr. Davis
+6,C045,Guernsey,2024-02-20,Routine checkup,Good,Healthy condition,Dr. Miller
+7,C045,Guernsey,2024-02-18,Artificial insemination,Completed,AI procedure successful,Dr. Wilson
+8,C067,Holstein,2024-02-27,Routine checkup,Good,Excellent health status,Dr. Moore
+9,C012,Holstein,2024-02-22,Emergency checkup,Alert,High temperature detected,Dr. Taylor
+10,C012,Holstein,2024-02-20,Medication administered,Completed,Antibiotics for infection,Dr. Anderson
+11,C089,Jersey,2024-02-26,Routine checkup,Good,All parameters normal,Dr. Thomas
+12,C156,Guernsey,2024-02-24,Routine checkup,Good,Healthy condition,Dr. Jackson
+13,C156,Guernsey,2024-02-22,Artificial insemination,Completed,AI procedure successful,Dr. White
+14,C234,Holstein,2024-02-23,Routine checkup,Good,Minor weight loss noted,Dr. Harris
+15,C345,Jersey,2024-02-29,Routine checkup,Good,Excellent health status,Dr. Martin
+16,C456,Guernsey,2024-02-21,Routine checkup,Good,All vital signs normal,Dr. Garcia
+17,C567,Holstein,2024-02-25,Routine checkup,Good,Healthy condition,Dr. Martinez
+18,C678,Jersey,2024-02-26,Routine checkup,Good,All parameters normal,Dr. Robinson
+19,C789,Holstein,2024-02-27,Routine checkup,Good,Excellent health status,Dr. Clark
+20,C890,Guernsey,2024-02-28,Routine checkup,Good,All vital signs normal,Dr. Rodriguez
+21,C901,Jersey,2024-02-24,Routine checkup,Good,Healthy condition,Dr. Lewis
+22,C123,Holstein,2024-02-25,Routine checkup,Good,All parameters normal,Dr. Lee
+23,C246,Guernsey,2024-02-26,Routine checkup,Good,Excellent health status,Dr. Walker
+24,C357,Jersey,2024-02-27,Routine checkup,Good,All vital signs normal,Dr. Hall
+25,C468,Holstein,2024-02-23,Emergency checkup,Alert,Respiratory distress detected,Dr. Allen
+26,C579,Guernsey,2024-02-28,Routine checkup,Good,Healthy condition,Dr. Young
+27,C680,Holstein,2024-02-25,Routine checkup,Good,All parameters normal,Dr. King 

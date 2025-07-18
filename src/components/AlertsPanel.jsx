@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AlertTriangle, Bell, Clock, CheckCircle, Filter, X, Eye, ChevronDown } from 'lucide-react';
+import { AlertTriangle, Bell, Clock, CheckCircle, Eye, ChevronDown } from 'lucide-react';
 
 const AlertsPanel = () => {
   const [alerts, setAlerts] = useState([
@@ -9,26 +9,26 @@ const AlertsPanel = () => {
       priority: 'high',
       message: 'Elevated temperature detected',
       cowId: 'C023',
-      timestamp: '10 min ago',
+      timestamp: '5 min ago',
       resolved: false,
-      details: 'Temperature reading: 39.8°C (Normal: 38.0-39.0°C)'
+      details: 'Temperature: 39.8°C (Normal: 38.5°C). Monitor closely.'
     },
     {
       id: '2',
       type: 'breeding',
       priority: 'medium',
-      message: 'Heat cycle detected - breeding window open',
+      message: 'Heat cycle indicators detected',
       cowId: 'C045',
-      timestamp: '25 min ago',
+      timestamp: '15 min ago',
       resolved: false,
-      details: 'Heat signs detected. Ready for artificial insemination.'
+      details: 'Cow showing signs of estrus. Ready for breeding.'
     },
     {
       id: '3',
       type: 'behavior',
       priority: 'medium',
-      message: 'Decreased activity levels',
-      cowId: 'C012',
+      message: 'Reduced activity levels',
+      cowId: 'C067',
       timestamp: '1 hour ago',
       resolved: false,
       details: 'Activity reduced by 40% compared to normal patterns'
@@ -116,18 +116,18 @@ const AlertsPanel = () => {
     : alerts.filter(alert => alert.type === selectedFilter && (showResolved || !alert.resolved));
 
   return (
-    <div className="dashboard-card rounded-lg p-6">
+    <div className="dashboard-card rounded-lg p-4 sm:p-6">
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          <h2 className="text-lg font-semibold text-gray-900">Smart Alerts</h2>
-          <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 sm:space-x-3">
+          <h2 className="text-base sm:text-lg font-semibold text-gray-900">Smart Alerts</h2>
+          <div className="flex items-center space-x-1 sm:space-x-2">
             <span className="inline-block w-2 h-2 bg-red-500 rounded-full"></span>
-            <span className="text-sm text-gray-600">{activeAlerts.length} active</span>
+            <span className="text-xs sm:text-sm text-gray-600">{activeAlerts.length} active</span>
           </div>
         </div>
         <button 
           onClick={() => setShowResolved(!showResolved)}
-          className="text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors"
+          className="text-xs sm:text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors touch-target"
         >
           {showResolved ? 'Hide Resolved' : 'Show Resolved'}
         </button>
@@ -135,11 +135,11 @@ const AlertsPanel = () => {
       
       {/* Filter Dropdown */}
       <div className="flex items-center justify-between mb-4">
-        <div className="relative">
+        <div className="relative flex-1 sm:flex-none">
           <select
             value={selectedFilter}
             onChange={(e) => setSelectedFilter(e.target.value)}
-            className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full sm:w-auto appearance-none bg-white border border-gray-300 rounded-lg px-3 sm:px-4 py-2 pr-8 text-xs sm:text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             {filters.map((filter) => (
               <option key={filter.id} value={filter.id}>
@@ -151,34 +151,36 @@ const AlertsPanel = () => {
         </div>
       </div>
       
-      <div className="space-y-4 max-h-80 overflow-y-auto">
+      <div className="space-y-3 sm:space-y-4 max-h-80 overflow-y-auto">
         {filteredAlerts.map((alert) => (
           <div
             key={alert.id}
-            className={`p-4 rounded-lg border-l-4 ${getPriorityColor(alert.priority, alert.resolved)} transition-all hover:shadow-md group`}
+            className={`p-3 sm:p-4 rounded-lg border-l-4 ${getPriorityColor(alert.priority, alert.resolved)} transition-all hover:shadow-md group touch-target`}
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
                 {getAlertIcon(alert.type, alert.resolved)}
-                <div>
-                  <span className="text-sm font-medium text-gray-900">
+                <div className="min-w-0 flex-1">
+                  <span className="text-xs sm:text-sm font-medium text-gray-900 truncate">
                     {alert.cowId ? `Cow ${alert.cowId}` : 'System'}
                   </span>
-                  <span className="text-xs text-gray-500 ml-2">• {alert.timestamp}</span>
+                  <span className="text-xs text-gray-500 ml-1 sm:ml-2 truncate block sm:inline">• {alert.timestamp}</span>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
                 <button 
                   onClick={() => handleViewDetails(alert)}
-                  className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="p-1 text-gray-400 hover:text-gray-600 transition-colors touch-target"
+                  aria-label="View details"
                 >
                   <Eye className="w-4 h-4" />
                 </button>
                 {!alert.resolved && (
                   <button 
                     onClick={() => handleResolveAlert(alert.id)}
-                    className="p-1 text-green-600 hover:text-green-800 transition-colors"
+                    className="p-1 text-green-600 hover:text-green-800 transition-colors touch-target"
                     title="Mark as resolved"
+                    aria-label="Resolve alert"
                   >
                     <CheckCircle className="w-4 h-4" />
                   </button>
@@ -186,14 +188,14 @@ const AlertsPanel = () => {
               </div>
             </div>
             
-            <p className="text-sm text-gray-700 mt-2">{alert.message}</p>
+            <p className="text-xs sm:text-sm text-gray-700 mt-2 line-clamp-2">{alert.message}</p>
             
             {alert.details && (
-              <p className="text-xs text-gray-500 mt-1">{alert.details}</p>
+              <p className="text-xs text-gray-500 mt-1 line-clamp-2">{alert.details}</p>
             )}
             
             <div className="flex items-center justify-between mt-3">
-              <span className={`inline-block px-2 py-1 text-xs font-medium rounded-full ${
+              <span className={`inline-block px-2 py-1 text-xs font-medium rounded-full truncate ${
                 alert.priority === 'high' ? 'bg-red-100 text-red-800' :
                 alert.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
                 'bg-gray-100 text-gray-800'
@@ -204,7 +206,7 @@ const AlertsPanel = () => {
               {!alert.resolved && (
                 <button 
                   onClick={() => handleResolveAlert(alert.id)}
-                  className="text-xs text-green-600 hover:text-green-800 font-medium transition-colors"
+                  className="text-xs text-green-600 hover:text-green-800 font-medium transition-colors flex-shrink-0 touch-target"
                 >
                   Resolve
                 </button>
@@ -216,13 +218,13 @@ const AlertsPanel = () => {
         {filteredAlerts.length === 0 && (
           <div className="text-center py-8 text-gray-500">
             <AlertTriangle className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-            <p>No alerts found for the selected filter.</p>
+            <p className="text-sm sm:text-base">No alerts found for the selected filter.</p>
           </div>
         )}
       </div>
       
       <div className="mt-4 pt-4 border-t border-gray-200">
-        <button className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors">
+        <button className="w-full text-xs sm:text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors touch-target py-2">
           View All Alerts
         </button>
       </div>

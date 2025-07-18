@@ -1,0 +1,22 @@
+CowID,Breed,Status,DaysInCycle,LastInsemination,ExpectedCalving,Confidence,Notes
+C001,Holstein,pregnant,45,2024-01-15,2024-10-23,95,Confirmed pregnancy
+C023,Jersey,heat,21,,,88,Heat cycle detected
+C045,Guernsey,inseminated,3,2024-02-28,,92,Recently inseminated
+C067,Holstein,open,35,,,78,Ready for breeding
+C012,Holstein,pregnant,67,2024-01-08,2024-09-18,89,Confirmed pregnancy
+C089,Jersey,heat,18,,,85,Heat cycle detected
+C156,Guernsey,inseminated,7,2024-02-25,,90,Recently inseminated
+C234,Holstein,open,42,,,76,Ready for breeding
+C345,Jersey,pregnant,52,2024-01-20,2024-12-20,94,Confirmed pregnancy
+C456,Guernsey,heat,24,,,87,Heat cycle detected
+C567,Holstein,inseminated,5,2024-02-27,,91,Recently inseminated
+C678,Jersey,open,38,,,79,Ready for breeding
+C789,Holstein,pregnant,58,2024-01-12,2024-09-12,93,Confirmed pregnancy
+C890,Guernsey,heat,16,,,86,Heat cycle detected
+C901,Jersey,inseminated,9,2024-02-23,,88,Recently inseminated
+C123,Holstein,open,41,,,77,Ready for breeding
+C246,Guernsey,pregnant,49,2024-01-28,2024-10-15,92,Confirmed pregnancy
+C357,Jersey,heat,22,,,84,Heat cycle detected
+C468,Holstein,inseminated,4,2024-02-29,,89,Recently inseminated
+C579,Guernsey,open,36,,,80,Ready for breeding
+C680,Holstein,pregnant,55,2024-01-10,2024-09-30,91,Confirmed pregnancy 

@@ -1,0 +1,26 @@
+RecordID,CowID,Breed,Date,MorningProduction,AfternoonProduction,EveningProduction,TotalDailyProduction,QualityScore,Notes
+1,C001,Holstein,2024-02-29,9.5,10.2,8.8,28.5,92,Excellent production
+2,C023,Jersey,2024-02-29,7.2,7.8,7.3,22.3,88,Good production
+3,C045,Guernsey,2024-02-29,8.1,8.9,8.7,25.7,85,Steady production
+4,C067,Holstein,2024-02-29,10.1,10.5,9.6,30.2,94,Outstanding production
+5,C012,Holstein,2024-02-29,8.9,9.2,8.7,26.8,78,Below average
+6,C089,Jersey,2024-02-29,7.8,8.2,8.1,24.1,91,Good production
+7,C156,Guernsey,2024-02-29,7.5,8.0,8.0,23.5,87,Steady production
+8,C234,Holstein,2024-02-29,9.1,9.3,8.9,27.3,83,Good production
+9,C345,Jersey,2024-02-29,6.8,7.5,7.5,21.8,96,Excellent production
+10,C456,Guernsey,2024-02-29,8.2,8.4,8.3,24.9,89,Good production
+11,C567,Holstein,2024-02-29,9.7,9.8,9.6,29.1,90,Excellent production
+12,C678,Jersey,2024-02-29,7.1,7.8,7.8,22.7,82,Below average
+13,C789,Holstein,2024-02-29,9.4,9.6,9.4,28.4,93,Excellent production
+14,C890,Guernsey,2024-02-29,7.6,7.8,7.8,23.2,95,Excellent production
+15,C901,Jersey,2024-02-29,6.8,7.2,7.5,21.5,79,Below average
+16,C123,Holstein,2024-02-29,8.9,9.1,8.9,26.9,88,Good production
+17,C246,Guernsey,2024-02-29,8.2,8.5,8.6,25.3,86,Good production
+18,C357,Jersey,2024-02-29,7.1,7.3,7.7,22.1,94,Excellent production
+19,C468,Holstein,2024-02-29,9.1,9.3,9.2,27.6,84,Good production
+20,C579,Guernsey,2024-02-29,8.1,8.3,8.4,24.8,91,Good production
+21,C680,Holstein,2024-02-29,9.6,9.7,9.6,28.9,87,Good production
+22,C001,Holstein,2024-02-28,9.3,10.0,8.9,28.2,91,Good production
+23,C023,Jersey,2024-02-28,7.1,7.7,7.4,22.2,87,Good production
+24,C045,Guernsey,2024-02-28,8.0,8.8,8.6,25.4,86,Good production
+25,C067,Holstein,2024-02-28,10.0,10.4,9.5,29.9,93,Excellent production 

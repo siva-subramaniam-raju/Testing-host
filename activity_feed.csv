@@ -1,0 +1,26 @@
+ActivityID,CowID,Breed,Activity,Timestamp,Type,Description,Duration,Location
+1,C001,Holstein,Eating,2024-02-29 08:00:00,normal,Started feeding at station 3,15,Feeding Station 3
+2,C045,Guernsey,Ruminating,2024-02-29 08:05:00,success,Good rumination pattern detected,45,Stall Area A
+3,C023,Jersey,Abnormal behavior,2024-02-29 08:12:00,alert,Excessive lying detected,120,Stall Area B
+4,C012,Holstein,Walking,2024-02-29 08:15:00,normal,Moving to water station,5,Water Station 2
+5,C089,Holstein,Lying,2024-02-29 08:18:00,normal,Resting in stall area,30,Stall Area C
+6,C067,Holstein,Heat detection,2024-02-29 08:25:00,success,Heat cycle indicators detected,Ongoing,Breeding Area
+7,C156,Guernsey,Eating,2024-02-29 08:30:00,normal,Started feeding at station 1,20,Feeding Station 1
+8,C234,Holstein,Ruminating,2024-02-29 08:35:00,success,Good rumination pattern detected,50,Stall Area D
+9,C345,Jersey,Walking,2024-02-29 08:40:00,normal,Moving to milking parlor,8,Milking Parlor
+10,C456,Guernsey,Lying,2024-02-29 08:45:00,normal,Resting in stall area,25,Stall Area E
+11,C567,Holstein,Eating,2024-02-29 08:50:00,normal,Started feeding at station 2,18,Feeding Station 2
+12,C678,Jersey,Abnormal behavior,2024-02-29 08:55:00,alert,Reduced activity detected,90,Stall Area F
+13,C789,Holstein,Ruminating,2024-02-29 09:00:00,success,Good rumination pattern detected,40,Stall Area G
+14,C890,Guernsey,Walking,2024-02-29 09:05:00,normal,Moving to water station,6,Water Station 1
+15,C901,Jersey,Lying,2024-02-29 09:10:00,normal,Resting in stall area,35,Stall Area H
+16,C123,Holstein,Eating,2024-02-29 09:15:00,normal,Started feeding at station 4,22,Feeding Station 4
+17,C246,Guernsey,Heat detection,2024-02-29 09:20:00,success,Heat cycle indicators detected,Ongoing,Breeding Area
+18,C357,Jersey,Ruminating,2024-02-29 09:25:00,success,Good rumination pattern detected,55,Stall Area I
+19,C468,Holstein,Walking,2024-02-29 09:30:00,normal,Moving to milking parlor,7,Milking Parlor
+20,C579,Guernsey,Lying,2024-02-29 09:35:00,normal,Resting in stall area,28,Stall Area J
+21,C680,Holstein,Eating,2024-02-29 09:40:00,normal,Started feeding at station 5,19,Feeding Station 5
+22,C001,Holstein,Ruminating,2024-02-29 09:45:00,success,Good rumination pattern detected,48,Stall Area K
+23,C023,Jersey,Walking,2024-02-29 09:50:00,normal,Moving to water station,4,Water Station 3
+24,C045,Guernsey,Lying,2024-02-29 09:55:00,normal,Resting in stall area,32,Stall Area L
+25,C067,Holstein,Eating,2024-02-29 10:00:00,normal,Started feeding at station 6,16,Feeding Station 6 

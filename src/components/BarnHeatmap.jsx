@@ -27,43 +27,43 @@ const BarnHeatmap = ({ onCowSelect }) => {
   };
 
   return (
-    <div className="dashboard-card rounded-lg p-6">
+    <div className="dashboard-card rounded-lg p-4 sm:p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Barn Layout</h2>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <Eye className="w-4 h-4 text-gray-400" />
-            <span className="text-sm text-gray-600">Live View</span>
+        <h2 className="text-base sm:text-lg font-semibold text-gray-900">Barn Layout</h2>
+        <div className="flex items-center space-x-2 sm:space-x-4">
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            <Eye className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
+            <span className="text-xs sm:text-sm text-gray-600 hidden sm:inline">Live View</span>
           </div>
-          <MapPin className="w-5 h-5 text-gray-400" />
+          <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
         </div>
       </div>
       
-      <div className="bg-gray-50 rounded-lg p-4 mb-4">
-        <div className="relative h-80 bg-green-100 rounded-lg border-2 border-green-200 overflow-hidden">
+      <div className="bg-gray-50 rounded-lg p-3 sm:p-4 mb-4">
+        <div className="relative h-48 sm:h-80 bg-green-100 rounded-lg border-2 border-green-200 overflow-hidden">
           {/* Barn structures */}
-          <div className="absolute top-4 left-4 right-4 h-8 bg-gray-300 rounded opacity-50"></div>
-          <div className="absolute bottom-4 left-4 right-4 h-8 bg-gray-300 rounded opacity-50"></div>
-          <div className="absolute top-16 left-4 bottom-16 w-8 bg-gray-300 rounded opacity-50"></div>
-          <div className="absolute top-16 right-4 bottom-16 w-8 bg-gray-300 rounded opacity-50"></div>
+          <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 h-4 sm:h-8 bg-gray-300 rounded opacity-50"></div>
+          <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4 h-4 sm:h-8 bg-gray-300 rounded opacity-50"></div>
+          <div className="absolute top-8 sm:top-16 left-2 sm:left-4 bottom-8 sm:bottom-16 w-4 sm:w-8 bg-gray-300 rounded opacity-50"></div>
+          <div className="absolute top-8 sm:top-16 right-2 sm:right-4 bottom-8 sm:bottom-16 w-4 sm:w-8 bg-gray-300 rounded opacity-50"></div>
           
           {/* Feeding areas */}
-          <div className="absolute top-4 left-16 w-20 h-8 bg-yellow-200 rounded opacity-70"></div>
-          <div className="absolute top-4 right-16 w-20 h-8 bg-yellow-200 rounded opacity-70"></div>
+          <div className="absolute top-2 sm:top-4 left-8 sm:left-16 w-10 sm:w-20 h-4 sm:h-8 bg-yellow-200 rounded opacity-70"></div>
+          <div className="absolute top-2 sm:top-4 right-8 sm:right-16 w-10 sm:w-20 h-4 sm:h-8 bg-yellow-200 rounded opacity-70"></div>
           
           {/* Water stations */}
-          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 w-12 h-8 bg-blue-200 rounded opacity-70"></div>
+          <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 w-6 sm:w-12 h-4 sm:h-8 bg-blue-200 rounded opacity-70"></div>
           
           {/* Cow positions */}
           {cowPositions.map((cow) => (
             <div
               key={cow.id}
-              className={`absolute w-4 h-4 rounded-full border-2 cursor-pointer transform -translate-x-1/2 -translate-y-1/2 hover:scale-125 transition-all ${getStatusColor(cow.status)}`}
+              className={`absolute w-3 h-3 sm:w-4 sm:h-4 rounded-full border-2 cursor-pointer transform -translate-x-1/2 -translate-y-1/2 hover:scale-125 transition-all touch-target ${getStatusColor(cow.status)}`}
               style={{ left: `${cow.x}%`, top: `${cow.y}%` }}
               onClick={() => onCowSelect(cow.id)}
               title={`Cow ${cow.id} - ${cow.status} - ${cow.temperature}°C`}
             >
-              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-700 whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity">
+              <div className="absolute -top-4 sm:-top-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-700 whitespace-nowrap opacity-0 hover:opacity-100 transition-opacity">
                 {cow.id}
               </div>
             </div>
@@ -71,28 +71,28 @@ const BarnHeatmap = ({ onCowSelect }) => {
         </div>
       </div>
       
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            <span className="text-sm text-gray-600">Active</span>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-2 sm:space-y-0">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-4">
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full"></div>
+            <span className="text-xs sm:text-sm text-gray-600">Active</span>
           </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-            <span className="text-sm text-gray-600">Resting</span>
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-blue-500 rounded-full"></div>
+            <span className="text-xs sm:text-sm text-gray-600">Resting</span>
           </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <span className="text-sm text-gray-600">Feeding</span>
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-full"></div>
+            <span className="text-xs sm:text-sm text-gray-600">Feeding</span>
           </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <span className="text-sm text-gray-600">Alert</span>
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-red-500 rounded-full"></div>
+            <span className="text-xs sm:text-sm text-gray-600">Alert</span>
           </div>
         </div>
         
-        <div className="flex items-center space-x-2 text-sm text-gray-600">
-          <Thermometer className="w-4 h-4" />
+        <div className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-600">
+          <Thermometer className="w-3 h-3 sm:w-4 sm:h-4" />
           <span>Avg: 38.7°C</span>
         </div>
       </div>

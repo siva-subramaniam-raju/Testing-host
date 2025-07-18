@@ -59,29 +59,29 @@ const PregnancyStatus = () => {
   };
 
   return (
-    <div className="dashboard-card rounded-lg p-6">
+    <div className="dashboard-card rounded-lg p-4 sm:p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Pregnancy Status</h2>
-        <Calendar className="w-5 h-5 text-gray-400" />
+        <h2 className="text-base sm:text-lg font-semibold text-gray-900">Pregnancy Status</h2>
+        <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
       </div>
       
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {pregnancyData.map((data) => (
           <div
             key={data.cowId}
-            className="p-4 border border-gray-200 rounded-lg hover:shadow-sm transition-shadow"
+            className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:shadow-sm transition-shadow touch-target"
           >
             <div className="flex items-center justify-between mb-3">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 min-w-0 flex-1">
                 {getStatusIcon(data.status)}
-                <span className="font-medium text-gray-900">Cow {data.cowId}</span>
+                <span className="font-medium text-gray-900 text-sm sm:text-base truncate">Cow {data.cowId}</span>
               </div>
-              <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(data.status)}`}>
+              <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusColor(data.status)} flex-shrink-0 ml-2`}>
                 {data.status.charAt(0).toUpperCase() + data.status.slice(1)}
               </span>
             </div>
             
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm">
               <div>
                 <p className="text-gray-500">Days in cycle</p>
                 <p className="font-medium">{data.daysInCycle}</p>
@@ -93,16 +93,16 @@ const PregnancyStatus = () => {
             </div>
             
             {data.lastInsemination && (
-              <div className="mt-3 text-sm">
+              <div className="mt-3 text-xs sm:text-sm">
                 <p className="text-gray-500">Last insemination</p>
-                <p className="font-medium">{data.lastInsemination}</p>
+                <p className="font-medium truncate">{data.lastInsemination}</p>
               </div>
             )}
             
             {data.expectedCalving && (
-              <div className="mt-3 text-sm">
+              <div className="mt-3 text-xs sm:text-sm">
                 <p className="text-gray-500">Expected calving</p>
-                <p className="font-medium text-green-600">{data.expectedCalving}</p>
+                <p className="font-medium text-green-600 truncate">{data.expectedCalving}</p>
               </div>
             )}
             

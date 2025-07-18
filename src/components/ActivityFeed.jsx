@@ -114,16 +114,17 @@ const ActivityFeed = () => {
   };
 
   return (
-    <div className="dashboard-card rounded-lg p-6">
+    <div className="dashboard-card rounded-lg p-4 sm:p-6">
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center space-x-3">
-          <h2 className="text-lg font-semibold text-gray-900">Real-time Activity</h2>
-          <Clock className="w-5 h-5 text-gray-400" />
+        <div className="flex items-center space-x-2 sm:space-x-3">
+          <h2 className="text-base sm:text-lg font-semibold text-gray-900">Real-time Activity</h2>
+          <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
         </div>
         <button 
           onClick={handleRefresh}
           disabled={isRefreshing}
-          className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all disabled:opacity-50"
+          className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-all disabled:opacity-50 touch-target"
+          aria-label="Refresh activities"
         >
           <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
         </button>
@@ -131,11 +132,11 @@ const ActivityFeed = () => {
       
       {/* Filter Dropdown */}
       <div className="flex items-center justify-between mb-4">
-        <div className="relative">
+        <div className="relative flex-1 sm:flex-none">
           <select
             value={selectedFilter}
             onChange={(e) => setSelectedFilter(e.target.value)}
-            className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full sm:w-auto appearance-none bg-white border border-gray-300 rounded-lg px-3 sm:px-4 py-2 pr-8 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             {filters.map((filter) => (
               <option key={filter.id} value={filter.id}>
@@ -147,40 +148,40 @@ const ActivityFeed = () => {
         </div>
       </div>
       
-      <div className="space-y-4 max-h-80 overflow-y-auto">
+      <div className="space-y-3 sm:space-y-4 max-h-80 overflow-y-auto">
         {filteredActivities.map((activity) => (
           <div
             key={activity.id}
-            className={`p-4 rounded-lg border-l-4 ${getActivityColor(activity.type)} transition-all hover:shadow-md cursor-pointer group`}
+            className={`p-3 sm:p-4 rounded-lg border-l-4 ${getActivityColor(activity.type)} transition-all hover:shadow-md cursor-pointer group touch-target`}
             onClick={() => handleViewDetails(activity)}
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
                 {getActivityIcon(activity.type)}
-                <div>
-                  <span className="font-medium text-gray-900">Cow {activity.cowId}</span>
-                  <span className="text-xs text-gray-500 ml-2">• {activity.location}</span>
+                <div className="min-w-0 flex-1">
+                  <span className="font-medium text-gray-900 text-sm sm:text-base">Cow {activity.cowId}</span>
+                  <span className="text-xs text-gray-500 ml-1 sm:ml-2 truncate block sm:inline">• {activity.location}</span>
                 </div>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 flex-shrink-0">
                 <span className="text-xs text-gray-500">{activity.timestamp}</span>
                 <Eye className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
               </div>
             </div>
             
-            <p className="text-sm text-gray-700 mt-2">{activity.description}</p>
+            <p className="text-sm text-gray-700 mt-2 line-clamp-2">{activity.description}</p>
             
             <div className="flex items-center justify-between mt-3">
-              <div className="flex items-center space-x-3">
-                <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full">
+              <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+                <span className="inline-block px-2 py-1 text-xs font-medium bg-gray-100 text-gray-800 rounded-full truncate">
                   {activity.activity}
                 </span>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs text-gray-500 truncate">
                   Duration: {activity.duration}
                 </span>
               </div>
               
-              <button className="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors">
+              <button className="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors flex-shrink-0">
                 View Details
               </button>
             </div>
@@ -190,13 +191,13 @@ const ActivityFeed = () => {
         {filteredActivities.length === 0 && (
           <div className="text-center py-8 text-gray-500">
             <Activity className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-            <p>No activities found for the selected filter.</p>
+            <p className="text-sm sm:text-base">No activities found for the selected filter.</p>
           </div>
         )}
       </div>
       
       <div className="mt-4 pt-4 border-t border-gray-200">
-        <button className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors">
+        <button className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors touch-target py-2">
           View All Activities
         </button>
       </div>
