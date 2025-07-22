@@ -1,38 +1,39 @@
 import React, { useState } from 'react';
 import { Beef, Leaf, Target, AlertTriangle, BarChart3, Activity, Bed, Utensils, Users, MapPin } from 'lucide-react';
 
-const DashboardOverview = () => {
+const DashboardOverview = ({ metrics }) => {
   const [activeTimeFilter, setActiveTimeFilter] = useState('week');
 
+  // Use live data if available, otherwise fall back to defaults
   const keyMetrics = [
     {
       title: 'Total Cows Monitored',
-      value: '142',
-      trend: '↑12% from last month',
+      value: metrics?.totalCows?.toString() || '142',
+      trend: metrics?.trends?.totalCows || '↑12% from last month',
       icon: Beef,
       color: 'text-green-600',
       bgColor: 'bg-green-100'
     },
     {
       title: 'Potential Pregnancies',
-      value: '38',
-      trend: '↑5% from last week',
+      value: metrics?.pregnantCows?.toString() || '38',
+      trend: metrics?.trends?.pregnantCows || '↑5% from last week',
       icon: Leaf,
       color: 'text-green-600',
       bgColor: 'bg-green-100'
     },
     {
       title: 'Prediction Accuracy',
-      value: '92.4%',
-      trend: '↑2.1% improvement',
+      value: `${metrics?.accuracy || 92.4}%`,
+      trend: metrics?.trends?.accuracy || '↑2.1% improvement',
       icon: Target,
       color: 'text-blue-600',
       bgColor: 'bg-blue-100'
     },
     {
       title: 'Attention Needed',
-      value: '7',
-      trend: '↓3 resolved',
+      value: metrics?.attentionNeeded?.toString() || '7',
+      trend: metrics?.trends?.attentionNeeded || '↓3 resolved',
       icon: AlertTriangle,
       color: 'text-red-600',
       bgColor: 'bg-red-100'
@@ -46,6 +47,20 @@ const DashboardOverview = () => {
       Angus: { pregnant: 12, notPregnant: 10, inconclusive: 2 },
       Hereford: { pregnant: 15, notPregnant: 7, inconclusive: 5 },
       Guernsey: { pregnant: 10, notPregnant: 3, inconclusive: 1 }
+    },
+    month: {
+      Holstein: { pregnant: 28, notPregnant: 5, inconclusive: 2 },
+      Jersey: { pregnant: 22, notPregnant: 3, inconclusive: 2 },
+      Angus: { pregnant: 18, notPregnant: 4, inconclusive: 2 },
+      Hereford: { pregnant: 20, notPregnant: 5, inconclusive: 2 },
+      Guernsey: { pregnant: 12, notPregnant: 2, inconclusive: 0 }
+    },
+    quarter: {
+      Holstein: { pregnant: 32, notPregnant: 2, inconclusive: 1 },
+      Jersey: { pregnant: 25, notPregnant: 1, inconclusive: 1 },
+      Angus: { pregnant: 21, notPregnant: 2, inconclusive: 1 },
+      Hereford: { pregnant: 24, notPregnant: 2, inconclusive: 1 },
+      Guernsey: { pregnant: 13, notPregnant: 1, inconclusive: 0 }
     }
   };
 
@@ -78,7 +93,7 @@ const DashboardOverview = () => {
     ));
   };
 
-  const maxValue = getMaxValue(pregnancyData.week);
+  const maxValue = getMaxValue(pregnancyData[activeTimeFilter]);
 
   return (
     <div className="space-y-6">
@@ -115,7 +130,10 @@ const DashboardOverview = () => {
             {timeFilters.map((filter) => (
               <button
                 key={filter.id}
-                onClick={() => setActiveTimeFilter(filter.id)}
+                onClick={() => {
+                  setActiveTimeFilter(filter.id);
+                  console.log('Time filter changed to:', filter.label);
+                }}
                 className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${
                   activeTimeFilter === filter.id
                     ? 'bg-blue-100 text-blue-700'
@@ -128,7 +146,7 @@ const DashboardOverview = () => {
           </div>
           
           <div className="space-y-4">
-            {Object.entries(pregnancyData.week).map(([breed, data]) => (
+            {Object.entries(pregnancyData[activeTimeFilter]).map(([breed, data]) => (
               <div key={breed} className="space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="font-medium text-gray-900">{breed}</span>
@@ -177,7 +195,13 @@ const DashboardOverview = () => {
         <div className="dashboard-card rounded-lg p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900">Behavioral Indicators</h2>
-            <button className="text-sm font-medium text-blue-600 hover:text-blue-700">
+            <button 
+              className="text-sm font-medium text-blue-600 hover:text-blue-700"
+              onClick={() => {
+                console.log('Opening behavioral indicators details');
+                // You could navigate to a detailed behavioral analysis page here
+              }}
+            >
               Details
             </button>
           </div>

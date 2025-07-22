@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Bell, Settings, User, Wifi, LogOut, User as UserIcon, ChevronDown, X } from 'lucide-react';
+import { Bell, Settings, User, Wifi, LogOut, User as UserIcon, ChevronDown, X, BarChart3, Users, Heart, Activity, MapPin, TrendingUp, AlertTriangle } from 'lucide-react';
 
-const Header = () => {
+const Header = ({ onSectionChange, activeSection }) => {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showMainMenu, setShowMainMenu] = useState(false);
 
   const notifications = [
     {
@@ -30,6 +31,25 @@ const Header = () => {
     }
   ];
 
+  const menuItems = [
+    { id: 'overview', label: 'Dashboard', icon: BarChart3 },
+    { id: 'cows', label: 'Cattle Monitor', icon: Users },
+    { id: 'barn', label: 'Barn Map', icon: MapPin },
+    { id: 'activity', label: 'Activity Feed', icon: Activity },
+    { id: 'pregnancy', label: 'Pregnancy Tracker', icon: Heart },
+    { id: 'alerts', label: 'Alerts', icon: Bell },
+    { id: 'analytics', label: 'Health Analytics', icon: TrendingUp },
+    { id: 'attention', label: 'Attention Needed', icon: AlertTriangle },
+    { id: 'trends', label: 'Behavioral Trends', icon: TrendingUp },
+  ];
+
+  const handleMenuClick = (sectionId) => {
+    if (onSectionChange) {
+      onSectionChange(sectionId);
+    }
+    setShowMainMenu(false);
+  };
+
   const getNotificationIcon = (type) => {
     switch (type) {
       case 'health':
@@ -53,6 +73,39 @@ const Header = () => {
               <h1 className="text-xl sm:text-2xl font-bold text-gray-900">EasyRanch</h1>
               <p className="text-xs sm:text-sm text-gray-500 hidden sm:block">Cow Monitoring Dashboard</p>
             </div>
+          </div>
+
+          {/* Center - Navigation Menu */}
+          <div className="hidden md:flex items-center space-x-1">
+            {menuItems.slice(0, 4).map((item) => {
+              const Icon = item.icon;
+              const isActive = activeSection === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleMenuClick(item.id)}
+                  className={`flex items-center space-x-2 px-2 py-2 text-xs font-medium rounded-md transition-all duration-200 ${
+                    isActive 
+                      ? 'text-green-600 bg-green-50 border border-green-200' 
+                      : 'text-gray-700 hover:text-green-600 hover:bg-green-50'
+                  }`}
+                >
+                  <Icon className="w-3 h-3" />
+                  <span className="hidden lg:inline">{item.label}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setShowMainMenu(!showMainMenu)}
+              className="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-lg transition-all"
+              aria-label="Main menu"
+            >
+              <BarChart3 className="w-5 h-5" />
+            </button>
           </div>
           
           {/* Right side - Connection status and Controls */}
@@ -182,16 +235,43 @@ const Header = () => {
             </div>
           </div>
         </div>
+
+        {/* Mobile Menu Dropdown */}
+        {showMainMenu && (
+          <div className="md:hidden border-t border-gray-200 bg-white shadow-lg">
+            <div className="px-2 pt-2 pb-3 space-y-1">
+              {menuItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeSection === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    className={`w-full flex items-center space-x-3 px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 ${
+                      isActive 
+                        ? 'text-green-600 bg-green-50 border border-green-200' 
+                        : 'text-gray-700 hover:text-green-600 hover:bg-green-50'
+                    }`}
+                    onClick={() => handleMenuClick(item.id)}
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
       
       {/* Backdrop for modals */}
-      {(showNotifications || showSettings || showUserMenu) && (
+      {(showNotifications || showSettings || showUserMenu || showMainMenu) && (
         <div 
           className="fixed inset-0 z-40"
           onClick={() => {
             setShowNotifications(false);
             setShowSettings(false);
             setShowUserMenu(false);
+            setShowMainMenu(false);
           }}
         />
       )}

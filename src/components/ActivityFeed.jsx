@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Clock, Activity, AlertCircle, CheckCircle, Filter, RefreshCw, Eye, ChevronDown } from 'lucide-react';
 
-const ActivityFeed = () => {
+const ActivityFeed = ({ activities = [], onCowSelect }) => {
   const [selectedFilter, setSelectedFilter] = useState('all');
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const activities = [
+  // Use live data if provided, otherwise fall back to sample data
+  const activityData = activities.length > 0 ? activities : [
     {
       id: '1',
       cowId: 'C001',
@@ -69,15 +70,15 @@ const ActivityFeed = () => {
   ];
 
   const filters = [
-    { id: 'all', label: 'All Activities', count: activities.length },
-    { id: 'normal', label: 'Normal', count: activities.filter(a => a.type === 'normal').length },
-    { id: 'success', label: 'Success', count: activities.filter(a => a.type === 'success').length },
-    { id: 'alert', label: 'Alerts', count: activities.filter(a => a.type === 'alert').length }
+    { id: 'all', label: 'All Activities', count: activityData.length },
+    { id: 'normal', label: 'Normal', count: activityData.filter(a => a.type === 'normal').length },
+    { id: 'success', label: 'Success', count: activityData.filter(a => a.type === 'success').length },
+    { id: 'alert', label: 'Alerts', count: activityData.filter(a => a.type === 'alert').length }
   ];
 
   const filteredActivities = selectedFilter === 'all' 
-    ? activities 
-    : activities.filter(activity => activity.type === selectedFilter);
+    ? activityData 
+    : activityData.filter(activity => activity.type === selectedFilter);
 
   const getActivityIcon = (type) => {
     switch (type) {
@@ -103,14 +104,32 @@ const ActivityFeed = () => {
 
   const handleRefresh = () => {
     setIsRefreshing(true);
+    // Simulate data refresh
     setTimeout(() => {
       setIsRefreshing(false);
+      // In a real app, you would reload data here
     }, 1000);
   };
 
   const handleViewDetails = (activity) => {
     console.log('Viewing details for:', activity);
-    // Here you would typically open a modal or navigate to a detail page
+    // If onCowSelect is provided, use it to show cow details
+    if (onCowSelect && activity.cowId) {
+      onCowSelect(activity.cowId);
+    }
+    // You could also open a modal or navigate to a detail page here
+  };
+
+  const handleViewAllActivities = () => {
+    console.log('Viewing all activities');
+    // Navigate to full activity page or open modal
+    // For now, just reset filter to show all
+    setSelectedFilter('all');
+  };
+
+  const handleFilterChange = (filterId) => {
+    setSelectedFilter(filterId);
+    console.log('Filter changed to:', filterId);
   };
 
   return (
@@ -135,7 +154,7 @@ const ActivityFeed = () => {
         <div className="relative flex-1 sm:flex-none">
           <select
             value={selectedFilter}
-            onChange={(e) => setSelectedFilter(e.target.value)}
+            onChange={(e) => handleFilterChange(e.target.value)}
             className="w-full sm:w-auto appearance-none bg-white border border-gray-300 rounded-lg px-3 sm:px-4 py-2 pr-8 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             {filters.map((filter) => (
@@ -181,7 +200,13 @@ const ActivityFeed = () => {
                 </span>
               </div>
               
-              <button className="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors flex-shrink-0">
+              <button 
+                className="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors flex-shrink-0"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleViewDetails(activity);
+                }}
+              >
                 View Details
               </button>
             </div>
@@ -197,7 +222,10 @@ const ActivityFeed = () => {
       </div>
       
       <div className="mt-4 pt-4 border-t border-gray-200">
-        <button className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors touch-target py-2">
+        <button 
+          className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors touch-target py-2"
+          onClick={handleViewAllActivities}
+        >
           View All Activities
         </button>
       </div>
