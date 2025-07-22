@@ -44,20 +44,23 @@ const Header = () => {
   };
 
   return (
-    <header className="farm-header sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+    <header className="farm-header sticky top-0 z-40">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Left side - Logo and title */}
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold text-gray-900">EasyRanch</h1>
-              <p className="text-sm text-gray-500">Cow Monitoring Dashboard</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900">EasyRanch</h1>
+              <p className="text-xs sm:text-sm text-gray-500 hidden sm:block">Cow Monitoring Dashboard</p>
             </div>
           </div>
           
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-white pasture-accent px-3 py-1 rounded-full">
-              <Wifi className="w-4 h-4" />
-              <span className="text-sm font-medium">Connected</span>
+          {/* Right side - Connection status and Controls */}
+          <div className="flex items-center space-x-3 sm:space-x-4 lg:space-x-6">
+            {/* Connection status - Fixed position */}
+            <div className="flex items-center space-x-1 sm:space-x-2 text-white pasture-accent px-2 sm:px-3 py-1 rounded-full">
+              <Wifi className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm font-medium">Connected</span>
             </div>
             
             {/* Notifications */}
@@ -65,17 +68,18 @@ const Header = () => {
               <button 
                 onClick={() => setShowNotifications(!showNotifications)}
                 className="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-lg transition-all relative"
+                aria-label="Notifications"
               >
-                <Bell className="w-5 h-5" />
+                <Bell className="w-4 h-4 sm:w-5 sm:h-5" />
                 {notifications.length > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center">
                     {notifications.length}
                   </span>
                 )}
               </button>
               
               {showNotifications && (
-                <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
                   <div className="p-4 border-b border-gray-200">
                     <div className="flex items-center justify-between">
                       <h3 className="text-lg font-semibold text-gray-900">Notifications</h3>
@@ -92,9 +96,9 @@ const Header = () => {
                       <div key={notification.id} className="p-4 border-b border-gray-100 hover:bg-gray-50 transition-colors">
                         <div className="flex items-start space-x-3">
                           {getNotificationIcon(notification.type)}
-                          <div className="flex-1">
-                            <p className="text-sm font-medium text-gray-900">{notification.title}</p>
-                            <p className="text-sm text-gray-600 mt-1">{notification.message}</p>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-medium text-gray-900 truncate">{notification.title}</p>
+                            <p className="text-sm text-gray-600 mt-1 line-clamp-2">{notification.message}</p>
                             <p className="text-xs text-gray-500 mt-2">{notification.time}</p>
                           </div>
                         </div>
@@ -115,8 +119,9 @@ const Header = () => {
               <button 
                 onClick={() => setShowSettings(!showSettings)}
                 className="p-2 text-gray-400 hover:text-gray-500 hover:bg-gray-100 rounded-lg transition-all"
+                aria-label="Settings"
               >
-                <Settings className="w-5 h-5" />
+                <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
               
               {showSettings && (
@@ -146,13 +151,13 @@ const Header = () => {
             <div className="relative">
               <button 
                 onClick={() => setShowUserMenu(!showUserMenu)}
-                className="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-lg transition-all"
+                className="flex items-center space-x-2 sm:space-x-3 p-2 hover:bg-gray-100 rounded-lg transition-all"
               >
                 <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
                   <User className="w-4 h-4 text-white" />
                 </div>
-                <span className="text-sm font-medium text-gray-700">Farm Manager</span>
-                <ChevronDown className="w-4 h-4 text-gray-400" />
+                <span className="text-sm font-medium text-gray-700 hidden sm:block">Farm Manager</span>
+                <ChevronDown className="w-4 h-4 text-gray-400 hidden sm:block" />
               </button>
               
               {showUserMenu && (

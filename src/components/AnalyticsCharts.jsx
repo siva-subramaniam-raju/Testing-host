@@ -65,36 +65,36 @@ const AnalyticsCharts = () => {
   ];
 
   return (
-    <div className="dashboard-card rounded-lg p-6">
+    <div className="dashboard-card rounded-lg p-4 sm:p-6">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900">Daily Trends</h2>
-        <BarChart3 className="w-5 h-5 text-gray-400" />
+        <h2 className="text-base sm:text-lg font-semibold text-gray-900">Daily Trends</h2>
+        <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
       </div>
       
-      <div className="flex space-x-1 mb-6 bg-gray-100 rounded-lg p-1 border-farm">
+      <div className="flex space-x-1 mb-4 sm:mb-6 bg-gray-100 rounded-lg p-1 border-farm">
         {tabs.map((tab) => {
           const Icon = tab.icon;
           return (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-md text-sm font-medium transition-all ${
+              className={`flex items-center space-x-1 sm:space-x-2 px-2 sm:px-4 py-2 rounded-md text-xs sm:text-sm font-medium transition-all touch-target ${
                 activeTab === tab.id
                   ? 'bg-white text-gray-900 shadow-sm'
                   : 'text-gray-600 hover:text-gray-900'
               }`}
             >
-              <Icon className="w-4 h-4" />
-              <span>{tab.label}</span>
+              <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="hidden xs:inline">{tab.label}</span>
             </button>
           );
         })}
       </div>
       
-      <div className="h-48 flex items-end justify-between space-x-2">
+      <div className="h-32 sm:h-48 flex items-end justify-between space-x-1 sm:space-x-2">
         {getCurrentData().map((data, index) => (
           <div key={index} className="flex-1 flex flex-col items-center">
-            <div className="w-full bg-gray-200 rounded-t-lg relative h-32 flex items-end">
+            <div className="w-full bg-gray-200 rounded-t-lg relative h-20 sm:h-32 flex items-end">
               <div
                 className={`w-full rounded-t-lg transition-all duration-500 ${getChartColor()}`}
                 style={{
@@ -102,18 +102,18 @@ const AnalyticsCharts = () => {
                   minHeight: '4px'
                 }}
               ></div>
-              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-700">
+              <div className="absolute -top-4 sm:-top-6 left-1/2 transform -translate-x-1/2 text-xs font-medium text-gray-700">
                 {activeTab === 'temperature' ? `${data.value}°C` : data.value}
               </div>
             </div>
-            <div className="mt-2 text-xs text-gray-500">{data.time}</div>
+            <div className="mt-1 sm:mt-2 text-xs text-gray-500">{data.time}</div>
           </div>
         ))}
       </div>
       
-      <div className="mt-4 flex justify-between items-center text-sm text-gray-600">
+      <div className="mt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center text-xs sm:text-sm text-gray-600 space-y-2 sm:space-y-0">
         <span>Last 24 hours</span>
-        <div className="flex items-center space-x-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
           <div className="flex items-center space-x-1">
             <span>Avg:</span>
             <span className="font-medium">

@@ -120,40 +120,40 @@ const CowsRequiringAttention = () => {
     });
 
   return (
-    <div className="dashboard-card rounded-lg p-6">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-3">
-          <h2 className="text-lg font-semibold text-gray-900">Cows Requiring Attention</h2>
-          <div className="flex items-center space-x-2">
-            <AlertTriangle className="w-4 h-4 text-orange-500" />
-            <span className="text-sm text-gray-600">{filteredAndSortedCows.length} cows</span>
+    <div className="dashboard-card rounded-lg p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 space-y-2 sm:space-y-0">
+        <div className="flex items-center space-x-2 sm:space-x-3">
+          <h2 className="text-base sm:text-lg font-semibold text-gray-900">Cows Requiring Attention</h2>
+          <div className="flex items-center space-x-1 sm:space-x-2">
+            <AlertTriangle className="w-3 h-3 sm:w-4 sm:h-4 text-orange-500" />
+            <span className="text-xs sm:text-sm text-gray-600">{filteredAndSortedCows.length} cows</span>
           </div>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-1 sm:space-x-2">
           <button 
             onClick={() => setShowFilters(!showFilters)}
-            className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors"
+            className="flex items-center space-x-1 px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-md transition-colors touch-target"
           >
-            <Filter className="w-4 h-4" />
-            <span>Filter</span>
+            <Filter className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">Filter</span>
           </button>
-          <button className="flex items-center space-x-2 px-3 py-2 text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors">
-            <Eye className="w-4 h-4" />
-            <span>View All Cattle</span>
+          <button className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium text-blue-600 hover:text-blue-700 hover:bg-blue-50 rounded-md transition-colors touch-target">
+            <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="hidden sm:inline">View All Cattle</span>
           </button>
         </div>
       </div>
 
       {/* Filters */}
       {showFilters && (
-        <div className="mb-4 p-4 bg-gray-50 rounded-lg border-farm">
-          <div className="flex items-center space-x-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Breed</label>
+        <div className="mb-4 p-3 sm:p-4 bg-gray-50 rounded-lg border-farm">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
+            <div className="flex-1 sm:flex-none">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Breed</label>
               <select 
                 value={selectedBreed}
                 onChange={(e) => setSelectedBreed(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full sm:w-auto px-2 sm:px-3 py-2 border border-gray-300 rounded-md text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 {breeds.map(breed => (
                   <option key={breed} value={breed}>
@@ -162,12 +162,12 @@ const CowsRequiringAttention = () => {
                 ))}
               </select>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Sort By</label>
+            <div className="flex-1 sm:flex-none">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">Sort By</label>
               <select 
                 value={sortBy}
                 onChange={(e) => handleSort(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full sm:w-auto px-2 sm:px-3 py-2 border border-gray-300 rounded-md text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
                 <option value="probability">Pregnancy Probability</option>
                 <option value="lastCheck">Last Check</option>
@@ -177,7 +177,7 @@ const CowsRequiringAttention = () => {
             </div>
             <button 
               onClick={() => handleSort(sortBy)}
-              className="mt-6 p-2 text-gray-400 hover:text-gray-600 transition-colors"
+              className="mt-4 sm:mt-6 p-2 text-gray-400 hover:text-gray-600 transition-colors touch-target"
             >
               {sortOrder === 'asc' ? <SortAsc className="w-4 h-4" /> : <SortDesc className="w-4 h-4" />}
             </button>
@@ -189,96 +189,93 @@ const CowsRequiringAttention = () => {
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="text-left py-3 px-2 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700" onClick={() => handleSort('cowId')}>
+              <th className="text-left py-2 sm:py-3 px-1 sm:px-2 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700" onClick={() => handleSort('cowId')}>
                 <div className="flex items-center space-x-1">
                   <span>Cow ID</span>
                   {sortBy === 'cowId' && (sortOrder === 'asc' ? <SortAsc className="w-3 h-3" /> : <SortDesc className="w-3 h-3" />)}
                 </div>
               </th>
-              <th className="text-left py-3 px-2 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700" onClick={() => handleSort('breed')}>
+              <th className="text-left py-2 sm:py-3 px-1 sm:px-2 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700" onClick={() => handleSort('breed')}>
                 <div className="flex items-center space-x-1">
                   <span>Breed</span>
                   {sortBy === 'breed' && (sortOrder === 'asc' ? <SortAsc className="w-3 h-3" /> : <SortDesc className="w-3 h-3" />)}
                 </div>
               </th>
-              <th className="text-left py-3 px-2 text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
-              <th className="text-left py-3 px-2 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700" onClick={() => handleSort('lastCheck')}>
+              <th className="text-left py-2 sm:py-3 px-1 sm:px-2 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700" onClick={() => handleSort('probability')}>
+                <div className="flex items-center space-x-1">
+                  <span>Probability</span>
+                  {sortBy === 'probability' && (sortOrder === 'asc' ? <SortAsc className="w-3 h-3" /> : <SortDesc className="w-3 h-3" />)}
+                </div>
+              </th>
+              <th className="text-left py-2 sm:py-3 px-1 sm:px-2 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700" onClick={() => handleSort('temperature')}>
+                <div className="flex items-center space-x-1">
+                  <span>Temp</span>
+                  {sortBy === 'temperature' && (sortOrder === 'asc' ? <SortAsc className="w-3 h-3" /> : <SortDesc className="w-3 h-3" />)}
+                </div>
+              </th>
+              <th className="text-left py-2 sm:py-3 px-1 sm:px-2 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700" onClick={() => handleSort('lastCheck')}>
                 <div className="flex items-center space-x-1">
                   <span>Last Check</span>
                   {sortBy === 'lastCheck' && (sortOrder === 'asc' ? <SortAsc className="w-3 h-3" /> : <SortDesc className="w-3 h-3" />)}
                 </div>
               </th>
-              <th className="text-left py-3 px-2 text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700" onClick={() => handleSort('probability')}>
-                <div className="flex items-center space-x-1">
-                  <span>Pregnancy Probability</span>
-                  {sortBy === 'probability' && (sortOrder === 'asc' ? <SortAsc className="w-3 h-3" /> : <SortDesc className="w-3 h-3" />)}
-                </div>
+              <th className="text-left py-2 sm:py-3 px-1 sm:px-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <span>Status</span>
               </th>
-              <th className="text-left py-3 px-2 text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-              <th className="text-left py-3 px-2 text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              <th className="text-left py-2 sm:py-3 px-1 sm:px-2 text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <span>Action</span>
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {filteredAndSortedCows.map((cow) => (
               <tr key={cow.cowId} className="hover:bg-gray-50 transition-colors">
-                <td className="py-4 px-2">
-                  <span className="font-medium text-gray-900">#{cow.cowId}</span>
+                <td className="py-2 sm:py-3 px-1 sm:px-2">
+                  <div className="text-xs sm:text-sm font-medium text-gray-900">{cow.cowId}</div>
+                  <div className="text-xs text-gray-500 truncate">{cow.location}</div>
                 </td>
-                <td className="py-4 px-2 text-sm text-gray-600">{cow.breed}</td>
-                <td className="py-4 px-2 text-sm text-gray-600">{cow.age}</td>
-                <td className="py-4 px-2">
-                  <div className="flex items-center space-x-1 text-sm text-gray-600">
-                    <Clock className="w-3 h-3" />
-                    <span>{cow.lastCheck}</span>
+                <td className="py-2 sm:py-3 px-1 sm:px-2">
+                  <div className="text-xs sm:text-sm text-gray-900">{cow.breed}</div>
+                  <div className="text-xs text-gray-500">{cow.age}</div>
+                </td>
+                <td className="py-2 sm:py-3 px-1 sm:px-2">
+                  <div className="text-xs sm:text-sm font-medium text-gray-900">{cow.pregnancyProbability}%</div>
+                  <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2 mt-1">
+                    <div
+                      className={`h-1.5 sm:h-2 rounded-full transition-all duration-300 ${getProgressBarColor(cow.pregnancyProbability)}`}
+                      style={{ width: `${cow.pregnancyProbability}%` }}
+                    />
                   </div>
                 </td>
-                <td className="py-4 px-2">
-                  <div className="w-24">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm font-medium text-gray-900">{cow.pregnancyProbability}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className={`h-2 rounded-full transition-all duration-300 ${getProgressBarColor(cow.pregnancyProbability)}`}
-                        style={{ width: `${cow.pregnancyProbability}%` }}
-                      />
-                    </div>
+                <td className="py-2 sm:py-3 px-1 sm:px-2">
+                  <div className="text-xs sm:text-sm font-medium text-gray-900">{cow.temperature}°C</div>
+                  <div className="text-xs text-gray-500">{cow.activityLevel}</div>
+                </td>
+                <td className="py-2 sm:py-3 px-1 sm:px-2">
+                  <div className="flex items-center space-x-1">
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
+                    <span className="text-xs sm:text-sm text-gray-600">{cow.lastCheck}</span>
                   </div>
                 </td>
-                <td className="py-4 px-2">
+                <td className="py-2 sm:py-3 px-1 sm:px-2">
                   <span className={`inline-flex px-2 py-1 text-xs font-medium rounded-full ${cow.statusColor}`}>
                     {cow.status}
                   </span>
                 </td>
-                <td className="py-4 px-2">
-                  <div className="flex items-center space-x-2">
-                    <button 
-                      onClick={() => handleViewDetails(cow)}
-                      className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
-                      title="View Details"
-                    >
-                      <Eye className="w-4 h-4" />
-                    </button>
-                    <button 
-                      className="p-1 text-blue-400 hover:text-blue-600 transition-colors"
-                      title="Take Action"
-                    >
-                      <ChevronRight className="w-4 h-4" />
-                    </button>
-                  </div>
+                <td className="py-2 sm:py-3 px-1 sm:px-2">
+                  <button
+                    onClick={() => handleViewDetails(cow)}
+                    className="flex items-center space-x-1 text-xs sm:text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors touch-target"
+                  >
+                    <span>View</span>
+                    <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      {filteredAndSortedCows.length === 0 && (
-        <div className="text-center py-8 text-gray-500">
-          <AlertTriangle className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-          <p>No cows found matching the current filters.</p>
-        </div>
-      )}
     </div>
   );
 };

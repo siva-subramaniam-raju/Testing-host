@@ -1,0 +1,31 @@
+SensorID,Location,SensorType,Reading,Unit,Timestamp,Status,BatteryLevel,Notes
+S001,Barn A - Stall 12,Temperature,38.5,Celsius,2024-02-29 10:00:00,Active,85,Normal reading
+S002,Barn A - Stall 12,Activity,High,Level,2024-02-29 10:00:00,Active,90,High activity detected
+S003,Barn A - Stall 12,Rumination,7.5,Hours,2024-02-29 10:00:00,Active,88,Good rumination
+S004,Barn B - Stall 8,Temperature,39.1,Celsius,2024-02-29 10:00:00,Alert,75,Elevated temperature
+S005,Barn B - Stall 8,Activity,Low,Level,2024-02-29 10:00:00,Active,82,Reduced activity
+S006,Barn B - Stall 8,Rumination,6.8,Hours,2024-02-29 10:00:00,Active,79,Below average rumination
+S007,Barn A - Stall 5,Temperature,38.8,Celsius,2024-02-29 10:00:00,Active,92,Normal reading
+S008,Barn A - Stall 5,Activity,Normal,Level,2024-02-29 10:00:00,Active,89,Normal activity
+S009,Barn A - Stall 5,Rumination,8.2,Hours,2024-02-29 10:00:00,Active,91,Excellent rumination
+S010,Barn C - Stall 3,Temperature,38.6,Celsius,2024-02-29 10:00:00,Active,87,Normal reading
+S011,Barn C - Stall 3,Activity,Normal,Level,2024-02-29 10:00:00,Active,84,Normal activity
+S012,Barn C - Stall 3,Rumination,7.8,Hours,2024-02-29 10:00:00,Active,86,Good rumination
+S013,Feeding Station 1,Feed Level,75,Percent,2024-02-29 10:00:00,Active,95,Normal feed level
+S014,Feeding Station 2,Feed Level,60,Percent,2024-02-29 10:00:00,Active,88,Feed refill needed
+S015,Feeding Station 3,Feed Level,90,Percent,2024-02-29 10:00:00,Active,92,Well stocked
+S016,Water Station 1,Water Level,85,Percent,2024-02-29 10:00:00,Active,94,Normal water level
+S017,Water Station 2,Water Level,45,Percent,2024-02-29 10:00:00,Alert,78,Low water level
+S018,Water Station 3,Water Level,95,Percent,2024-02-29 10:00:00,Active,96,Well stocked
+S019,Milking Parlor,Temperature,22.5,Celsius,2024-02-29 10:00:00,Active,98,Optimal temperature
+S020,Milking Parlor,Humidity,65,Percent,2024-02-29 10:00:00,Active,97,Normal humidity
+S021,Barn A - General,Temperature,18.2,Celsius,2024-02-29 10:00:00,Active,93,Comfortable temperature
+S022,Barn A - General,Humidity,70,Percent,2024-02-29 10:00:00,Active,91,Normal humidity
+S023,Barn B - General,Temperature,19.1,Celsius,2024-02-29 10:00:00,Active,89,Comfortable temperature
+S024,Barn B - General,Humidity,68,Percent,2024-02-29 10:00:00,Active,87,Normal humidity
+S025,Barn C - General,Temperature,18.8,Celsius,2024-02-29 10:00:00,Active,90,Comfortable temperature
+S026,Barn C - General,Humidity,72,Percent,2024-02-29 10:00:00,Active,88,Normal humidity
+S027,Breeding Area,Temperature,20.5,Celsius,2024-02-29 10:00:00,Active,96,Optimal breeding temperature
+S028,Breeding Area,Humidity,60,Percent,2024-02-29 10:00:00,Active,94,Optimal humidity
+S029,Storage Room,Temperature,15.2,Celsius,2024-02-29 10:00:00,Active,99,Proper storage conditions
+S030,Storage Room,Humidity,55,Percent,2024-02-29 10:00:00,Active,98,Proper storage conditions 
