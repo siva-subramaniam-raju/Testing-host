@@ -20,7 +20,7 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
 
   // Local cow video source
   const videoSources = [
-    '/Cow Video.mp4' // Primary - your actual cow video
+    './Cow Video.mp4' // Primary - your actual cow video
   ];
 
   useEffect(() => {
@@ -210,7 +210,7 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
                 preload="metadata"
                 style={{ border: isConnected ? '2px solid #10b981' : '2px solid #f59e0b' }}
               >
-                <source src="/Cow Video.mp4" type="video/mp4" />
+                <source src="./Cow Video.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
