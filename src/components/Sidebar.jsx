@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cow, X, BarChart3, Users, Heart, Bell, Activity, MapPin, TrendingUp, AlertTriangle } from 'lucide-react';
+import { X, BarChart3, Users, Heart, Bell, Activity, MapPin, TrendingUp, AlertTriangle } from 'lucide-react';
 
 const Sidebar = ({ activeSection, onSectionChange, isOpen, onToggle }) => {
   const menuItems = [
@@ -35,7 +35,7 @@ const Sidebar = ({ activeSection, onSectionChange, isOpen, onToggle }) => {
           <div className="p-6 border-b border-green-500">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <Cow className="h-8 w-8 text-white" />
+                <BarChart3 className="h-8 w-8 text-white" />
                 <h2 className="text-xl font-bold text-white">EasyRanch</h2>
               </div>
               <button
