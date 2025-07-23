@@ -1,4 +1,4 @@
-# Smart Farm Cow Monitoring Dashboard
+# Easy Ranch Cow Monitoring Dashboard
 
 A comprehensive React-based dashboard for monitoring dairy farm operations, cow health, and behavioral analytics.
 

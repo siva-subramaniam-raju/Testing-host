@@ -1,7 +1,7 @@
 {
   "name": "Easy Ranch Dashboard",
   "short_name": "Easy Ranch",
-  "description": "Easy Ranch - Smart Farm Cow Monitoring Dashboard - Real-time monitoring and analytics for dairy farm management by Innova8s Pte Ltd",
+  "description": "Easy Ranch - Cow Monitoring Dashboard - Real-time monitoring and analytics for dairy farm management by Innova8s Pte Ltd",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f5f1eb",

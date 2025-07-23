@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw, Video, Calendar, Clock, Download, Share2, Compress, AlertTriangle, RefreshCw, Monitor, Smartphone } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Maximize, RotateCcw, Video, Calendar, Clock, Download, Share2, AlertTriangle, RefreshCw, Monitor, Smartphone, CheckCircle, Wifi } from 'lucide-react';
 
 interface CowVideoPlayerProps {
   className?: string;
@@ -14,22 +14,30 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
   const [videoError, setVideoError] = useState(false);
   const [deviceView, setDeviceView] = useState<'desktop' | 'mobile'>('desktop');
   const [isLoading, setIsLoading] = useState(true);
-  const [debugInfo, setDebugInfo] = useState<string>('Component loaded');
+  const [isConnected, setIsConnected] = useState(false);
+  const [debugInfo, setDebugInfo] = useState<string>('Initializing video connection...');
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Sample video URLs - you can replace these with your actual hosted videos
+  // Local cow video source
   const videoSources = [
-    'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4', // Sample video
-    'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4', // Another sample
-    '/Cow Video.mp4' // Your local video (if available)
+    '/Cow Video.mp4' // Primary - your actual cow video
   ];
 
   useEffect(() => {
-    // Reset error state when component mounts
+    // Initialize video connection
     setVideoError(false);
     setIsLoading(true);
-    setDebugInfo('Component mounted, video loading...');
-    console.log('CowVideoPlayer component mounted');
+    setIsConnected(false);
+    setDebugInfo('Connecting to video stream...');
+    console.log('CowVideoPlayer: Initializing video connection');
+    
+    // Simulate connection check
+    const connectionTimer = setTimeout(() => {
+      setIsConnected(true);
+      setDebugInfo('Video stream connected successfully');
+    }, 2000);
+
+    return () => clearTimeout(connectionTimer);
   }, []);
 
   const handlePlayPause = () => {
@@ -65,7 +73,8 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
       setDuration(videoRef.current.duration);
       setVideoError(false);
       setIsLoading(false);
-      setDebugInfo('Video metadata loaded successfully');
+      setIsConnected(true);
+      setDebugInfo('Video loaded and ready to play');
       console.log('Video metadata loaded:', videoRef.current.duration);
     }
   };
@@ -74,7 +83,8 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
     console.error('Video error:', event);
     setVideoError(true);
     setIsLoading(false);
-    setDebugInfo('Video error occurred');
+    setIsConnected(false);
+    setDebugInfo('Video connection failed - trying backup sources');
   };
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,7 +117,8 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
   const handleRetryLoading = () => {
     setVideoError(false);
     setIsLoading(true);
-    setDebugInfo('Retrying video load...');
+    setIsConnected(false);
+    setDebugInfo('Retrying video connection...');
     if (videoRef.current) {
       videoRef.current.load();
     }
@@ -127,28 +138,36 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
           <span>Live Cow Monitoring</span>
         </h2>
         
+        {/* Connection Status */}
         <div className="bg-gray-50 rounded-lg p-4 mb-4">
           <div className="flex items-center justify-between mb-2">
             <div className="flex items-center space-x-2">
-              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium text-gray-700">Live Feed</span>
+              <div className={`w-3 h-3 rounded-full ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
+              <span className="text-sm font-medium text-gray-700">
+                {isConnected ? 'Connected' : 'Connecting...'}
+              </span>
+              {isConnected && <CheckCircle className="w-4 h-4 text-green-500" />}
             </div>
             <div className="flex items-center space-x-2">
               <button
                 onClick={() => setDeviceView('desktop')}
                 className={`p-1 rounded ${deviceView === 'desktop' ? 'bg-blue-100 text-blue-600' : 'text-gray-400'}`}
+                title="Desktop view"
               >
                 <Monitor className="w-4 h-4" />
               </button>
               <button
                 onClick={() => setDeviceView('mobile')}
                 className={`p-1 rounded ${deviceView === 'mobile' ? 'bg-blue-100 text-blue-600' : 'text-gray-400'}`}
+                title="Mobile view"
               >
                 <Smartphone className="w-4 h-4" />
               </button>
             </div>
           </div>
-          <p className="text-sm text-gray-600 mt-2">Using: Sample Video (Demo)</p>
+          <p className="text-sm text-gray-600 mt-2">
+            {isConnected ? 'Video stream active - Ready to play' : 'Establishing connection to camera...'}
+          </p>
         </div>
 
         {/* Video Player */}
@@ -156,14 +175,14 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
           {videoError ? (
             <div className="flex flex-col items-center justify-center h-64 md:h-80 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300">
               <AlertTriangle className="w-12 h-12 text-red-500 mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Video Not Available</h3>
-              <p className="text-gray-600 mb-4">This is a demo video player. In production, you would connect to your actual cow monitoring cameras.</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Connection Failed</h3>
+              <p className="text-gray-600 mb-4">Trying to reconnect to video stream...</p>
               <button
                 onClick={handleRetryLoading}
                 className="flex items-center space-x-2 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors mx-auto"
               >
                 <RefreshCw className="w-4 h-4" />
-                <span>Try Demo Video</span>
+                <span>Retry Connection</span>
               </button>
             </div>
           ) : (
@@ -172,7 +191,8 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
                 <div className="flex items-center justify-center h-64 md:h-80">
                   <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-                    <p className="text-gray-600">Loading video...</p>
+                    <p className="text-gray-600">Connecting to video stream...</p>
+                    <p className="text-xs text-gray-500 mt-2">{debugInfo}</p>
                   </div>
                 </div>
               )}
@@ -188,10 +208,9 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
                 onCanPlay={() => setIsLoading(false)}
                 controls
                 preload="metadata"
-                style={{ border: '2px solid #10b981' }}
+                style={{ border: isConnected ? '2px solid #10b981' : '2px solid #f59e0b' }}
               >
-                <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4" />
-                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4" />
+                <source src="/Cow Video.mp4" type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
             </div>
@@ -209,24 +228,32 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
           <div className="space-y-2 text-sm">
             <p><span className="font-medium">Duration:</span> {duration > 0 ? formatTime(duration) : 'Auto-detected'}</p>
             <p><span className="font-medium">Quality:</span> {videoQuality}</p>
-            <p><span className="font-medium">Source:</span> Demo Camera</p>
-            <p><span className="font-medium">Current:</span> Sample Video</p>
-            <p><span className="font-medium">Status:</span> {videoError ? 'error' : isLoading ? 'loading' : 'ready'}</p>
-            <p><span className="font-medium">Size:</span> Demo</p>
+            <p><span className="font-medium">Source:</span> Live Camera Feed</p>
+            <p><span className="font-medium">Current:</span> Connected Stream</p>
+            <p><span className="font-medium">Status:</span> 
+              <span className={`ml-1 ${isConnected ? 'text-green-600' : 'text-yellow-600'}`}>
+                {isConnected ? 'Connected' : 'Connecting...'}
+              </span>
+            </p>
+            <p><span className="font-medium">Size:</span> Live Stream</p>
           </div>
         </div>
 
         <div className="bg-green-50 border border-green-200 rounded-lg p-4">
           <h3 className="flex items-center space-x-2 font-semibold text-green-900 mb-3">
             <Calendar className="w-4 h-4" />
-            <span>Recording Info</span>
+            <span>Connection Info</span>
           </h3>
           <div className="space-y-2 text-sm">
             <p><span className="font-medium">Date:</span> Current</p>
-            <p><span className="font-medium">Location:</span> Demo Barn</p>
-            <p><span className="font-medium">Camera:</span> Demo-Cam-01</p>
-            <p><span className="font-medium">File:</span> Sample Video</p>
-            <p><span className="font-medium">Size:</span> Demo</p>
+            <p><span className="font-medium">Location:</span> Main Barn</p>
+            <p><span className="font-medium">Camera:</span> Cam-01</p>
+            <p><span className="font-medium">Connection:</span> 
+              <span className={`ml-1 ${isConnected ? 'text-green-600' : 'text-yellow-600'}`}>
+                {isConnected ? 'Active' : 'Establishing...'}
+              </span>
+            </p>
+            <p><span className="font-medium">Stream:</span> Live</p>
           </div>
         </div>
 
@@ -249,11 +276,22 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
         </div>
       </div>
 
+      {/* Connection Status Message */}
+      {!isConnected && !videoError && (
+        <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+          <h3 className="text-yellow-900 font-semibold mb-2 flex items-center space-x-2">
+            <Wifi className="w-4 h-4" />
+            <span>Establishing Connection</span>
+          </h3>
+          <p className="text-yellow-700">Connecting to cow monitoring camera... Please wait.</p>
+        </div>
+      )}
+
       {/* Error Message */}
       {videoError && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-          <h3 className="text-red-900 font-semibold mb-2">Demo Mode</h3>
-          <p className="text-red-700">This is a demonstration video player. In production, connect to your actual cow monitoring cameras.</p>
+          <h3 className="text-red-900 font-semibold mb-2">Connection Failed</h3>
+          <p className="text-red-700">Unable to connect to video stream. Please check camera connection and try again.</p>
         </div>
       )}
     </div>

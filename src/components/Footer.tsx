@@ -17,14 +17,14 @@ const Footer: React.FC = () => {
             </svg>
           </div>
           <div>
-            <h2 className="text-xl font-bold text-gray-900">Smart Farm</h2>
+            <h2 className="text-xl font-bold text-gray-900">Easy Ranch</h2>
             <p className="text-sm text-gray-600">Farm Management System</p>
           </div>
         </div>
 
         {/* Copyright and Version Info */}
         <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4 text-sm text-gray-600">
-          <span>© 2024 Smart Farm. All rights reserved.</span>
+          <span>© 2024 Easy Ranch. All rights reserved.</span>
           <span className="hidden sm:inline">•</span>
           <span>Version 1.0.0</span>
           <span className="hidden sm:inline">•</span>

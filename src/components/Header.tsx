@@ -50,7 +50,7 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold text-gray-900">Smart Farm</h1>
+              <h1 className="text-2xl font-bold text-gray-900">Easy Ranch</h1>
               <p className="text-sm text-gray-500">Cow Monitoring Dashboard</p>
             </div>
           </div>
