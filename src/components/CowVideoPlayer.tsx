@@ -115,10 +115,7 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   const videoSources = [
-    'Cow Video.mp4',
-    'result (52).mp4',
-    'test-video.mp4',
-    'video.mp4'
+    '/Cow Video.mp4'
   ];
 
   return (
@@ -192,7 +189,7 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
                 Low
               </button>
             </div>
-            <p className="text-sm text-gray-600 mt-2">Using: Cow Video.mp4 (79MB)</p>
+            <p className="text-sm text-gray-600 mt-2">Using: /Cow Video.mp4 (79MB)</p>
           </div>
           <div className="flex items-center space-x-2">
             <button
@@ -233,19 +230,7 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
                   <RefreshCw className="w-4 h-4" />
                   <span>Retry Loading</span>
                 </button>
-                <div className="mt-4">
-                  <p className="text-sm text-gray-600 mb-2">Try different video sources:</p>
-                  <div className="space-y-1">
-                    {videoSources.map((source, index) => (
-                      <button
-                        key={index}
-                        className="block text-blue-600 hover:text-blue-800 text-sm"
-                      >
-                        {source}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+
               </div>
             ) : (
               <div className="w-full">
@@ -271,7 +256,7 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
                   preload="metadata"
                   style={{ border: '2px solid #10b981' }}
                 >
-                  <source src="Cow Video.mp4" type="video/mp4" />
+                  <source src="/Cow Video.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -290,7 +275,7 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
               <p><span className="font-medium">Duration:</span> {duration > 0 ? formatTime(duration) : 'Auto-detected'}</p>
               <p><span className="font-medium">Quality:</span> {videoQuality}</p>
               <p><span className="font-medium">Source:</span> Farm Camera</p>
-                              <p><span className="font-medium">Current:</span> Cow Video.mp4</p>
+                              <p><span className="font-medium">Current:</span> /Cow Video.mp4</p>
               <p><span className="font-medium">Status:</span> {videoError ? 'error' : isLoading ? 'loading' : 'ready'}</p>
               <p><span className="font-medium">Size:</span> 79MB</p>
             </div>
@@ -305,7 +290,7 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
               <p><span className="font-medium">Date:</span> Current</p>
               <p><span className="font-medium">Location:</span> Main Barn</p>
               <p><span className="font-medium">Camera:</span> Cam-01</p>
-              <p><span className="font-medium">File:</span> Cow Video.mp4</p>
+              <p><span className="font-medium">File:</span> /Cow Video.mp4</p>
               <p><span className="font-medium">Size:</span> 79MB</p>
             </div>
           </div>
