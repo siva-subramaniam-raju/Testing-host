@@ -56,17 +56,38 @@ npm run build
 ## Project Structure
 
 ```
-src/
-├── components/          # React components
-│   ├── Header.tsx
-│   ├── Footer.tsx
-│   ├── EnhancedDashboard.tsx
-│   ├── CowVideoPlayer.tsx
-│   └── ...
-├── styles/             # CSS styles
-│   └── dashboard.css
-├── data/               # Mock data and utilities
-└── main.tsx           # Application entry point
+├── src/                    # Source code
+│   ├── components/         # React components
+│   │   ├── Header.tsx
+│   │   ├── Footer.tsx
+│   │   ├── EnhancedDashboard.tsx
+│   │   ├── CowVideoPlayer.tsx
+│   │   ├── BehavioralIndicators.tsx
+│   │   ├── RealTimeActivity.tsx
+│   │   ├── SmartAlerts.tsx
+│   │   ├── PregnancyStatus.tsx
+│   │   ├── PregnancyStatusDistribution.tsx
+│   │   ├── DailyTrends.tsx
+│   │   ├── CowsRequiringAttention.tsx
+│   │   ├── CowProfiles.tsx
+│   │   ├── CowImage.tsx
+│   │   ├── BehavioralTrendsCorrelation.tsx
+│   │   └── BarnLayout.tsx
+│   ├── styles/            # CSS styles
+│   │   └── dashboard.css
+│   ├── types/             # TypeScript type definitions
+│   ├── index.css          # Global styles
+│   ├── main.tsx           # Application entry point
+│   └── App.tsx            # Root component
+├── public/                # Static assets
+│   ├── Cow Video.mp4      # Video file
+│   ├── cow-icon.svg       # Icons
+│   └── manifest.json      # PWA manifest
+├── index.html             # HTML template
+├── package.json           # Dependencies and scripts
+├── vite.config.ts         # Vite configuration
+├── tailwind.config.js     # Tailwind CSS configuration
+└── README.md              # Project documentation
 ```
 
 ## Key Components

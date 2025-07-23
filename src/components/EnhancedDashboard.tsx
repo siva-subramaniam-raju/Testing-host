@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './Header.tsx';
 import Footer from './Footer.tsx';
 import PregnancyStatusDistribution from './PregnancyStatusDistribution.tsx';
@@ -12,9 +12,64 @@ import CowsRequiringAttention from './CowsRequiringAttention.tsx';
 import BehavioralTrendsCorrelation from './BehavioralTrendsCorrelation.tsx';
 import CowProfiles from './CowProfiles.tsx';
 import CowVideoPlayer from './CowVideoPlayer.tsx';
+import { Eye, AlertTriangle, Download, FileText } from 'lucide-react';
 
 const EnhancedDashboard: React.FC = () => {
   const [selectedTimeframe, setSelectedTimeframe] = useState<'week' | 'month' | 'quarter'>('week');
+  const [dashboardData, setDashboardData] = useState({
+    totalCows: 142,
+    potentialPregnancies: 38,
+    predictionAccuracy: 92.4,
+    attentionNeeded: 7,
+    lastUpdate: new Date()
+  });
+
+  // Real-time data simulation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDashboardData(prev => ({
+        ...prev,
+        totalCows: prev.totalCows + Math.floor(Math.random() * 3) - 1,
+        potentialPregnancies: Math.max(0, prev.potentialPregnancies + Math.floor(Math.random() * 5) - 2),
+        predictionAccuracy: Math.min(100, Math.max(85, prev.predictionAccuracy + (Math.random() - 0.5) * 2)),
+        attentionNeeded: Math.max(0, prev.attentionNeeded + Math.floor(Math.random() * 3) - 1),
+        lastUpdate: new Date()
+      }));
+    }, 30000); // Update every 30 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleQuickAction = (action: string) => {
+    switch (action) {
+      case 'viewActivities':
+        console.log('Opening all activities view...');
+        // Simulate opening activities modal
+        alert('Opening Activities Dashboard...');
+        break;
+      case 'viewAlerts':
+        console.log('Opening all alerts view...');
+        // Simulate opening alerts modal
+        alert('Opening Alerts Dashboard...');
+        break;
+      case 'downloadReport':
+        console.log('Downloading report...');
+        // Simulate report download
+        const link = document.createElement('a');
+        link.href = 'data:text/csv;charset=utf-8,Report Data';
+        link.download = `farm-report-${new Date().toISOString().split('T')[0]}.csv`;
+        link.click();
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleCowSelect = (cowId: string) => {
+    console.log('Selected cow:', cowId);
+    // Simulate opening cow details modal
+    alert(`Opening details for Cow ${cowId}...`);
+  };
 
   return (
     <div className="dashboard-container">
@@ -23,7 +78,8 @@ const EnhancedDashboard: React.FC = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="summary-card p-6">
+          <div className="summary-card p-6 cursor-pointer hover:shadow-lg transition-all duration-300" 
+               onClick={() => handleQuickAction('viewActivities')}>
             <div className="flex items-center justify-between">
               <div className="summary-card-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -32,15 +88,17 @@ const EnhancedDashboard: React.FC = () => {
                   <path d="m18.5 6 2.19 4.5a6.48 6.48 0 0 1 .31 2 6.49 6.49 0 0 1-2.6 5.2C15.4 20.2 11 22 7 22a3 3 0 0 1-2.68-1.66L2.4 16.5"></path>
                 </svg>
               </div>
+              <Eye className="w-5 h-5 text-gray-400 hover:text-gray-600 transition-colors" />
             </div>
             <div className="mt-4">
               <p className="text-sm font-medium text-gray-600">Total Cows Monitored</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">142</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">{dashboardData.totalCows}</p>
               <p className="text-sm text-green-600 mt-1">↑12% from last month</p>
             </div>
           </div>
 
-          <div className="summary-card p-6">
+          <div className="summary-card p-6 cursor-pointer hover:shadow-lg transition-all duration-300"
+               onClick={() => handleQuickAction('viewAlerts')}>
             <div className="flex items-center justify-between">
               <div className="summary-card-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -48,15 +106,17 @@ const EnhancedDashboard: React.FC = () => {
                   <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path>
                 </svg>
               </div>
+              <AlertTriangle className="w-5 h-5 text-gray-400 hover:text-gray-600 transition-colors" />
             </div>
             <div className="mt-4">
               <p className="text-sm font-medium text-gray-600">Potential Pregnancies</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">38</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">{dashboardData.potentialPregnancies}</p>
               <p className="text-sm text-green-600 mt-1">↑5% from last week</p>
             </div>
           </div>
 
-          <div className="summary-card p-6">
+          <div className="summary-card p-6 cursor-pointer hover:shadow-lg transition-all duration-300"
+               onClick={() => handleQuickAction('downloadReport')}>
             <div className="flex items-center justify-between">
               <div className="summary-card-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -65,15 +125,17 @@ const EnhancedDashboard: React.FC = () => {
                   <circle cx="12" cy="12" r="2"></circle>
                 </svg>
               </div>
+              <Download className="w-5 h-5 text-gray-400 hover:text-gray-600 transition-colors" />
             </div>
             <div className="mt-4">
               <p className="text-sm font-medium text-gray-600">Prediction Accuracy</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">92.4%</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">{dashboardData.predictionAccuracy.toFixed(1)}%</p>
               <p className="text-sm text-green-600 mt-1">↑2.1% improvement</p>
             </div>
           </div>
 
-          <div className="summary-card p-6">
+          <div className="summary-card p-6 cursor-pointer hover:shadow-lg transition-all duration-300"
+               onClick={() => handleQuickAction('viewAlerts')}>
             <div className="flex items-center justify-between">
               <div className="summary-card-icon">
                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -82,10 +144,11 @@ const EnhancedDashboard: React.FC = () => {
                   <path d="M12 17h.01"></path>
                 </svg>
               </div>
+              <AlertTriangle className="w-5 h-5 text-gray-400 hover:text-gray-600 transition-colors" />
             </div>
             <div className="mt-4">
               <p className="text-sm font-medium text-gray-600">Attention Needed</p>
-              <p className="text-2xl font-bold text-gray-900 mt-1">7</p>
+              <p className="text-2xl font-bold text-gray-900 mt-1">{dashboardData.attentionNeeded}</p>
               <p className="text-sm text-green-600 mt-1">↓3 resolved</p>
             </div>
           </div>
@@ -93,7 +156,10 @@ const EnhancedDashboard: React.FC = () => {
 
         {/* Main Dashboard Sections */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-          <PregnancyStatusDistribution timeframe={selectedTimeframe} />
+          <PregnancyStatusDistribution 
+            timeframe={selectedTimeframe} 
+            onTimeframeChange={setSelectedTimeframe}
+          />
           <BehavioralIndicators />
         </div>
 
@@ -107,7 +173,7 @@ const EnhancedDashboard: React.FC = () => {
           </div>
           <div className="space-y-6">
             <PregnancyStatus />
-            <CowProfiles onCowSelect={(cowId) => console.log('Selected cow:', cowId)} />
+            <CowProfiles onCowSelect={handleCowSelect} />
           </div>
         </div>
 
@@ -124,14 +190,26 @@ const EnhancedDashboard: React.FC = () => {
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
               <div className="space-y-3">
-                <button className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">
-                  View All Activities
+                <button 
+                  className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors flex items-center justify-center space-x-2"
+                  onClick={() => handleQuickAction('viewActivities')}
+                >
+                  <Eye className="w-4 h-4" />
+                  <span>View All Activities</span>
                 </button>
-                <button className="w-full px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors">
-                  View All Alerts
+                <button 
+                  className="w-full px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center space-x-2"
+                  onClick={() => handleQuickAction('viewAlerts')}
+                >
+                  <AlertTriangle className="w-4 h-4" />
+                  <span>View All Alerts</span>
                 </button>
-                <button className="w-full px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors">
-                  Download Report
+                <button 
+                  className="w-full px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors flex items-center justify-center space-x-2"
+                  onClick={() => handleQuickAction('downloadReport')}
+                >
+                  <FileText className="w-4 h-4" />
+                  <span>Download Report</span>
                 </button>
               </div>
             </div>

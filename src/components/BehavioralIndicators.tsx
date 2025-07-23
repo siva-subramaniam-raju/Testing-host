@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const BehavioralIndicators: React.FC = () => {
-  const pregnantData = [85, 65, 45, 75, 90]; // Activity, Resting, Feeding, Social, Movement
-  const nonPregnantData = [70, 80, 60, 85, 75];
+  const [showDetails, setShowDetails] = useState(false);
+  const [pregnantData, setPregnantData] = useState([85, 65, 45, 75, 90]); // Activity, Resting, Feeding, Social, Movement
+  const [nonPregnantData, setNonPregnantData] = useState([70, 80, 60, 85, 75]);
+
+  // Real-time data simulation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPregnantData(prev => prev.map(value => 
+        Math.max(0, Math.min(100, value + (Math.random() - 0.5) * 10))
+      ));
+      setNonPregnantData(prev => prev.map(value => 
+        Math.max(0, Math.min(100, value + (Math.random() - 0.5) * 10))
+      ));
+    }, 45000); // Update every 45 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const maxValue = 100;
   const centerX = 96;
@@ -30,11 +45,29 @@ const BehavioralIndicators: React.FC = () => {
     { text: 'Movement Range', x: centerX - 40, y: centerY - radius - 25, angle: -162 }
   ];
 
+  const handleDetailsClick = () => {
+    setShowDetails(!showDetails);
+    // Simulate opening detailed behavioral analysis
+    if (!showDetails) {
+      console.log('Opening detailed behavioral analysis...');
+      alert('Opening Detailed Behavioral Analysis Dashboard...');
+    }
+  };
+
+  const getAverageValue = (data: number[]) => {
+    return (data.reduce((sum, val) => sum + val, 0) / data.length).toFixed(1);
+  };
+
   return (
     <div className="dashboard-card p-6">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold text-gray-900">Behavioral Indicators</h2>
-        <button className="dashboard-button secondary">Details</button>
+        <button 
+          className="dashboard-button secondary"
+          onClick={handleDetailsClick}
+        >
+          Details
+        </button>
       </div>
       
       <div className="chart-container relative w-full h-80">
@@ -67,13 +100,19 @@ const BehavioralIndicators: React.FC = () => {
               
               {/* Radar chart polygons */}
               <svg className="absolute inset-0 w-full h-full" viewBox="0 0 192 192">
-                <polygon 
-                  points={pregnantPoints} 
-                  className="radar-polygon pregnant"
+                {/* Pregnant cows polygon */}
+                <polygon
+                  points={pregnantPoints}
+                  fill="rgba(34, 197, 94, 0.2)"
+                  stroke="rgb(34, 197, 94)"
+                  strokeWidth="2"
                 />
-                <polygon 
-                  points={nonPregnantPoints} 
-                  className="radar-polygon non-pregnant"
+                {/* Non-pregnant cows polygon */}
+                <polygon
+                  points={nonPregnantPoints}
+                  fill="rgba(239, 68, 68, 0.2)"
+                  stroke="rgb(239, 68, 68)"
+                  strokeWidth="2"
                 />
               </svg>
             </div>
@@ -81,14 +120,23 @@ const BehavioralIndicators: React.FC = () => {
         </div>
       </div>
       
+      {/* Legend with real-time averages */}
       <div className="flex items-center justify-center space-x-6 mt-4 text-sm">
         <div className="flex items-center space-x-2">
-          <div className="w-3 h-3 bg-green-500 rounded"></div>
-          <span className="text-gray-600">Pregnant Cows (Avg)</span>
+          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+          <span className="text-gray-600">Pregnant Cows (Avg: {getAverageValue(pregnantData)})</span>
         </div>
         <div className="flex items-center space-x-2">
-          <div className="w-3 h-3 bg-red-500 rounded"></div>
-          <span className="text-gray-600">Non-Pregnant Cows (Avg)</span>
+          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+          <span className="text-gray-600">Non-Pregnant Cows (Avg: {getAverageValue(nonPregnantData)})</span>
+        </div>
+      </div>
+
+      {/* Real-time status indicator */}
+      <div className="mt-4 text-center">
+        <div className="inline-flex items-center space-x-2 bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">
+          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+          <span>Live data updating every 45 seconds</span>
         </div>
       </div>
     </div>

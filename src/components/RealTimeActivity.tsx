@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Clock, Activity, AlertCircle, CheckCircle, Filter, RefreshCw, Eye, ChevronDown } from 'lucide-react';
 
 interface ActivityItem {
@@ -16,8 +16,7 @@ interface ActivityItem {
 const RealTimeActivity: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
-
-  const activities: ActivityItem[] = [
+  const [activities, setActivities] = useState<ActivityItem[]>([
     {
       id: '1',
       cowId: 'C001',
@@ -84,7 +83,47 @@ const RealTimeActivity: React.FC = () => {
       status: 'success',
       type: 'heat_detection'
     }
-  ];
+  ]);
+
+  // Real-time data simulation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActivities(prev => {
+        const newActivities = [...prev];
+        // Update times
+        newActivities.forEach(activity => {
+          if (activity.time.includes('min ago')) {
+            const minutes = parseInt(activity.time.split(' ')[0]);
+            if (minutes < 60) {
+              activity.time = `${minutes + 1} min ago`;
+            } else {
+              activity.time = `${Math.floor(minutes / 60)}h ${minutes % 60}m ago`;
+            }
+          }
+        });
+        
+        // Add new activity occasionally
+        if (Math.random() > 0.7) {
+          const newActivity: ActivityItem = {
+            id: Date.now().toString(),
+            cowId: `C${Math.floor(Math.random() * 100).toString().padStart(3, '0')}`,
+            cowName: `Cow C${Math.floor(Math.random() * 100).toString().padStart(3, '0')}`,
+            activity: 'New activity detected',
+            location: 'Various locations',
+            time: 'Now',
+            duration: '5 min',
+            status: 'normal',
+            type: 'walking'
+          };
+          newActivities.unshift(newActivity);
+        }
+        
+        return newActivities.slice(0, 10); // Keep only latest 10 activities
+      });
+    }, 15000); // Update every 15 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -115,7 +154,28 @@ const RealTimeActivity: React.FC = () => {
 
   const handleRefresh = () => {
     setIsRefreshing(true);
-    setTimeout(() => setIsRefreshing(false), 1000);
+    // Simulate refresh with new data
+    setTimeout(() => {
+      setActivities(prev => {
+        const newActivities = [...prev];
+        newActivities.forEach(activity => {
+          activity.time = 'Just now';
+        });
+        return newActivities;
+      });
+      setIsRefreshing(false);
+    }, 1000);
+  };
+
+  const handleViewDetails = (activity: ActivityItem) => {
+    console.log('Viewing activity details:', activity);
+    // Simulate opening activity details modal
+    alert(`Opening details for ${activity.cowName} - ${activity.activity}...`);
+  };
+
+  const handleFilterChange = (newFilter: string) => {
+    setFilter(newFilter);
+    console.log('Filtering activities by:', newFilter);
   };
 
   return (
@@ -139,7 +199,7 @@ const RealTimeActivity: React.FC = () => {
         <div className="relative">
           <select 
             value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            onChange={(e) => handleFilterChange(e.target.value)}
             className="dashboard-select"
             title="Filter activities by status"
           >
@@ -152,11 +212,12 @@ const RealTimeActivity: React.FC = () => {
         </div>
       </div>
       
-      <div className="space-y-4 max-h-80 overflow-y-auto dashboard-scroll">
+      <div className="space-y-3 max-h-64 overflow-y-auto">
         {filteredActivities.map((activity) => (
           <div 
             key={activity.id}
-            className={`activity-item ${activity.status}`}
+            className={`activity-item ${activity.status} cursor-pointer hover:shadow-md transition-all duration-200`}
+            onClick={() => handleViewDetails(activity)}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -183,18 +244,26 @@ const RealTimeActivity: React.FC = () => {
                 </span>
                 <span className="text-xs text-gray-500">Duration: {activity.duration}</span>
               </div>
-              <button className="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors">
+              <button 
+                className="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleViewDetails(activity);
+                }}
+              >
                 View Details
               </button>
             </div>
           </div>
         ))}
       </div>
-      
-      <div className="mt-4 pt-4 border-t border-gray-200">
-        <button className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors">
-          View All Activities
-        </button>
+
+      {/* Real-time status indicator */}
+      <div className="mt-4 text-center">
+        <div className="inline-flex items-center space-x-2 bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-sm">
+          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+          <span>Live activity data updating every 15 seconds</span>
+        </div>
       </div>
     </div>
   );

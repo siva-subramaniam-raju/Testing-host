@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Bell, AlertTriangle, CheckCircle, Eye, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { AlertTriangle, Bell, CheckCircle, Eye, ChevronDown } from 'lucide-react';
 
 interface Alert {
   id: string;
@@ -17,8 +17,7 @@ interface Alert {
 const SmartAlerts: React.FC = () => {
   const [filter, setFilter] = useState<string>('all');
   const [hideResolved, setHideResolved] = useState<boolean>(false);
-
-  const alerts: Alert[] = [
+  const [alerts, setAlerts] = useState<Alert[]>([
     {
       id: '1',
       cowId: 'C023',
@@ -79,7 +78,51 @@ const SmartAlerts: React.FC = () => {
       type: 'health',
       resolved: false
     }
-  ];
+  ]);
+
+  // Real-time data simulation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAlerts(prev => {
+        const newAlerts = [...prev];
+        
+        // Update times
+        newAlerts.forEach(alert => {
+          if (alert.time.includes('min ago')) {
+            const minutes = parseInt(alert.time.split(' ')[0]);
+            if (minutes < 60) {
+              alert.time = `${minutes + 1} min ago`;
+            } else {
+              alert.time = `${Math.floor(minutes / 60)}h ${minutes % 60}m ago`;
+            }
+          }
+        });
+        
+        // Add new alert occasionally
+        if (Math.random() > 0.8) {
+          const alertTypes = ['health', 'breeding', 'behavior', 'system'];
+          const priorities = ['high', 'medium', 'low'];
+          const newAlert: Alert = {
+            id: Date.now().toString(),
+            cowId: `C${Math.floor(Math.random() * 100).toString().padStart(3, '0')}`,
+            cowName: `Cow C${Math.floor(Math.random() * 100).toString().padStart(3, '0')}`,
+            title: 'New alert detected',
+            message: 'New alert message',
+            details: 'New alert details',
+            time: 'Just now',
+            priority: priorities[Math.floor(Math.random() * priorities.length)] as 'high' | 'medium' | 'low',
+            type: alertTypes[Math.floor(Math.random() * alertTypes.length)] as 'health' | 'breeding' | 'behavior' | 'system',
+            resolved: false
+          };
+          newAlerts.unshift(newAlert);
+        }
+        
+        return newAlerts.slice(0, 15); // Keep only latest 15 alerts
+      });
+    }, 20000); // Update every 20 seconds
+
+    return () => clearInterval(interval);
+  }, []);
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -124,6 +167,29 @@ const SmartAlerts: React.FC = () => {
 
   const activeAlerts = alerts.filter(alert => !alert.resolved).length;
 
+  const handleResolveAlert = (alertId: string) => {
+    setAlerts(prev => prev.map(alert => 
+      alert.id === alertId ? { ...alert, resolved: true } : alert
+    ));
+    console.log('Alert resolved:', alertId);
+  };
+
+  const handleViewDetails = (alert: Alert) => {
+    console.log('Viewing alert details:', alert);
+    // Simulate opening alert details modal
+    alert(`Opening details for ${alert.cowName} - ${alert.title}...`);
+  };
+
+  const handleFilterChange = (newFilter: string) => {
+    setFilter(newFilter);
+    console.log('Filtering alerts by:', newFilter);
+  };
+
+  const handleToggleResolved = () => {
+    setHideResolved(!hideResolved);
+    console.log('Toggle resolved alerts:', !hideResolved);
+  };
+
   return (
     <div className="dashboard-card p-6">
       <div className="flex items-center justify-between mb-4">
@@ -135,7 +201,7 @@ const SmartAlerts: React.FC = () => {
           </div>
         </div>
         <button 
-          onClick={() => setHideResolved(!hideResolved)}
+          onClick={handleToggleResolved}
           className="dashboard-button secondary"
         >
           {hideResolved ? 'Show Resolved' : 'Hide Resolved'}
@@ -146,7 +212,7 @@ const SmartAlerts: React.FC = () => {
         <div className="relative">
           <select 
             value={filter}
-            onChange={(e) => setFilter(e.target.value)}
+            onChange={(e) => handleFilterChange(e.target.value)}
             className="dashboard-select"
             title="Filter alerts by type"
           >
@@ -160,11 +226,12 @@ const SmartAlerts: React.FC = () => {
         </div>
       </div>
       
-      <div className="space-y-4 max-h-80 overflow-y-auto dashboard-scroll">
+      <div className="space-y-3 max-h-64 overflow-y-auto">
         {filteredAlerts.map((alert) => (
           <div 
             key={alert.id}
-            className={`alert-item ${alert.priority}`}
+            className={`alert-item ${alert.priority} cursor-pointer hover:shadow-md transition-all duration-200`}
+            onClick={() => handleViewDetails(alert)}
           >
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
@@ -175,11 +242,25 @@ const SmartAlerts: React.FC = () => {
                 </div>
               </div>
               <div className="flex items-center space-x-2">
-                <button className="p-1 text-gray-400 hover:text-gray-600 transition-colors" title="View details">
+                <button 
+                  className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleViewDetails(alert);
+                  }}
+                  title="View details"
+                >
                   <Eye className="w-4 h-4" />
                 </button>
                 {!alert.resolved && (
-                  <button className="p-1 text-green-600 hover:text-green-800 transition-colors" title="Mark as resolved">
+                  <button 
+                    className="p-1 text-green-600 hover:text-green-800 transition-colors"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleResolveAlert(alert.id);
+                    }}
+                    title="Mark as resolved"
+                  >
                     <CheckCircle className="w-4 h-4" />
                   </button>
                 )}
@@ -192,7 +273,13 @@ const SmartAlerts: React.FC = () => {
                 {alert.priority.charAt(0).toUpperCase() + alert.priority.slice(1)} Priority
               </span>
               {!alert.resolved && (
-                <button className="text-xs text-green-600 hover:text-green-800 font-medium transition-colors">
+                <button 
+                  className="text-xs text-green-600 hover:text-green-800 font-medium transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleResolveAlert(alert.id);
+                  }}
+                >
                   Resolve
                 </button>
               )}
@@ -200,11 +287,13 @@ const SmartAlerts: React.FC = () => {
           </div>
         ))}
       </div>
-      
-      <div className="mt-4 pt-4 border-t border-gray-200">
-        <button className="w-full text-sm text-blue-600 hover:text-blue-800 font-medium transition-colors">
-          View All Alerts
-        </button>
+
+      {/* Real-time status indicator */}
+      <div className="mt-4 text-center">
+        <div className="inline-flex items-center space-x-2 bg-red-50 text-red-700 px-3 py-1 rounded-full text-sm">
+          <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+          <span>Live alert data updating every 20 seconds</span>
+        </div>
       </div>
     </div>
   );
