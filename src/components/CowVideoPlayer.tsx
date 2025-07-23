@@ -115,10 +115,10 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   const videoSources = [
-    '/Cow Video.mp4',
-    '/result (52).mp4',
-    '/test-video.mp4',
-    '/video.mp4'
+    'Cow Video.mp4',
+    'result (52).mp4',
+    'test-video.mp4',
+    'video.mp4'
   ];
 
   return (
@@ -192,7 +192,7 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
                 Low
               </button>
             </div>
-            <p className="text-sm text-gray-600 mt-2">Using: /Cow Video.mp4 (79MB)</p>
+            <p className="text-sm text-gray-600 mt-2">Using: Cow Video.mp4 (79MB)</p>
           </div>
           <div className="flex items-center space-x-2">
             <button
@@ -271,7 +271,7 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
                   preload="metadata"
                   style={{ border: '2px solid #10b981' }}
                 >
-                  <source src="/Cow Video.mp4" type="video/mp4" />
+                  <source src="Cow Video.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
               </div>
@@ -290,7 +290,7 @@ const CowVideoPlayer: React.FC<CowVideoPlayerProps> = ({ className = '' }) => {
               <p><span className="font-medium">Duration:</span> {duration > 0 ? formatTime(duration) : 'Auto-detected'}</p>
               <p><span className="font-medium">Quality:</span> {videoQuality}</p>
               <p><span className="font-medium">Source:</span> Farm Camera</p>
-              <p><span className="font-medium">Current:</span> /Cow Video.mp4</p>
+                              <p><span className="font-medium">Current:</span> Cow Video.mp4</p>
               <p><span className="font-medium">Status:</span> {videoError ? 'error' : isLoading ? 'loading' : 'ready'}</p>
               <p><span className="font-medium">Size:</span> 79MB</p>
             </div>
